@@ -1,0 +1,10 @@
+/logging/
+
+*.properties
+src/main/resources/application.properties
+.classpath
+.gitignore.txt
+.project
+.settings/
+bin/
+target/
