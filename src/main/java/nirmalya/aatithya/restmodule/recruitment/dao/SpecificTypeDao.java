@@ -5,9 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import nirmalya.aatithya.restmodule.common.ServerDao;
-import nirmalya.aatithya.restmodule.common.utils.DataTableRequest;
 import nirmalya.aatithya.restmodule.common.utils.GenerateMasterSpecificTypeParameter;
-import nirmalya.aatithya.restmodule.common.utils.GenerateParameter;
 import nirmalya.aatithya.restmodule.common.utils.JsonResponse;
 import nirmalya.aatithya.restmodule.recruitment.model.SpecificTypeModel;
 

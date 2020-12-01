@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import nirmalya.aatithya.restmodule.common.ServerDao;
 import nirmalya.aatithya.restmodule.common.utils.DataTableRequest;
-import nirmalya.aatithya.restmodule.common.utils.DateFormatter;
 import nirmalya.aatithya.restmodule.common.utils.DropDownModel;
 import nirmalya.aatithya.restmodule.common.utils.GenerateParameter;
 import nirmalya.aatithya.restmodule.common.utils.GenerateQuestionTypeParameter;
@@ -64,14 +63,14 @@ public class QuestionTypeDao {
 	}
 	
 	/**
-	 * for specific list
+	 * for question list
 	 */
 		@SuppressWarnings("unchecked")
 		public List<DropDownModel> getQuestion() {
 
 			logger.info("Method : getQuestion starts");
 
-			List<DropDownModel> specificList = new ArrayList<DropDownModel>();
+			List<DropDownModel> questionList = new ArrayList<DropDownModel>();
 
 			try {
 				List<Object[]> x = em.createNamedStoredProcedureQuery("questionTypeRoutines")
@@ -79,7 +78,7 @@ public class QuestionTypeDao {
 
 				for (Object[] m : x) {
 					DropDownModel dropDownModel = new DropDownModel(m[0], m[1]);
-					specificList.add(dropDownModel);
+					questionList.add(dropDownModel);
 				}
 
 			} catch (Exception e) {
@@ -88,7 +87,7 @@ public class QuestionTypeDao {
 
 			logger.info("Method : getQuestion ends");
 
-			return specificList;
+			return questionList;
 		}
 		
 		/*
@@ -107,12 +106,16 @@ public class QuestionTypeDao {
 
 			for (QuestionTypeModel a : questionTypeModel) {
 				if (a.getSpeTypeId() == null || a.getSpeTypeId() == "") {
-					resp.setMessage("Specific Name not Selected");
+					resp.setCode("Field Validation Error");
+					resp.setMessage("Question Type Name not Selected");
 					validity = false;
-				} /*
-					 * else if (a.getQuestionType() == null || a.getQuestionType() == "") {
-					 * resp.setMessage("Question Name is required"); validity = false; }
-					 */
+				} 
+					  else if (a.getQuestionType() == null || a.getQuestionType() == "") {
+				      resp.setCode("Field Validation Error");
+					  resp.setMessage("Question Name is required"); 
+					  validity = false; 
+					  }
+					 
 			}
 			if (validity)
 				try {

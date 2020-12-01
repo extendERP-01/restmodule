@@ -1920,6 +1920,32 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 				@StoredProcedureParameter(mode = ParameterMode.IN, name = "actionValue", type = String.class) }	
 			
 				),	
+		/*	
+		 * * for Question master routines	
+		 */	
+		@NamedStoredProcedureQuery(name = "questionRoutines", procedureName = "hrms_questionRoutines", parameters = {	
+				@StoredProcedureParameter(mode = ParameterMode.IN, name = "actionType", type = String.class),	
+				@StoredProcedureParameter(mode = ParameterMode.IN, name = "actionValue", type = String.class) }	
+		
+				),
+		
+		/*	
+		 * * for shift scheduling routines	
+		 */	
+		@NamedStoredProcedureQuery(name = "addTrainingRoutines", procedureName = "hrm_TrainingPlanningRoutines", parameters = {	
+				@StoredProcedureParameter(mode = ParameterMode.IN, name = "actionType", type = String.class),	
+				@StoredProcedureParameter(mode = ParameterMode.IN, name = "actionValue", type = String.class) }	
+		
+				),
+		
+		/*	
+		 * * for shift scheduling routines	
+		 */	
+		@NamedStoredProcedureQuery(name = "shiftScheduleRoutines", procedureName = "hrms_shiftScheduleRoutines", parameters = {	
+				@StoredProcedureParameter(mode = ParameterMode.IN, name = "actionType", type = String.class),	
+				@StoredProcedureParameter(mode = ParameterMode.IN, name = "actionValue", type = String.class) }	
+		
+				),
 		@NamedStoredProcedureQuery(name = "questionTypeRoutines", procedureName = "hrms_questionTypeRoutines", parameters = {	
 				@StoredProcedureParameter(mode = ParameterMode.IN, name = "actionType", type = String.class),	
 				@StoredProcedureParameter(mode = ParameterMode.IN, name = "actionValue", type = String.class) }	

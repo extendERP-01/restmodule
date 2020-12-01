@@ -19,8 +19,7 @@ public class JobTitleRestModel {
 	private String createdBy;
 
 	public JobTitleRestModel() {
-		super();
-		// TODO Auto-generated constructor stub
+		super(); 
 
 	}
 
