@@ -1,5 +1,7 @@
 package nirmalya.aatithya.restmodule.master.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import nirmalya.aatithya.restmodule.common.utils.DropDownModel;
 import nirmalya.aatithya.restmodule.common.utils.JsonResponse;
 import nirmalya.aatithya.restmodule.master.dao.VendorMasterDao;
 import nirmalya.aatithya.restmodule.master.model.LocationMasterModel;
@@ -33,5 +36,12 @@ public class VendorMasterRestController {
 		logger.info("Method : saveVendorMaster ends");
 		return vendorMasterDao.saveVendorMaster(vendorMasterModel);
 	}
-
+	
+	@RequestMapping(value = "getCategoryList", method = { RequestMethod.GET })
+	public List<DropDownModel> getCategoryList() {
+		logger.info("Method : getCategoryList starts");
+		
+		logger.info("Method : getCategoryList ends");
+		return vendorMasterDao.getCategoryList();
+	}
 }

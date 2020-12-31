@@ -188,5 +188,27 @@ public class GenerateLocationMasterParameter {
 		
 		return s;
 	}
+	
+	public static String getLocationList(List<String> id) {
+
+		String s = "";
+		String section = "";
+		
+		if(id.size() > 0) {
+			for(String m : id) {
+				section = section + "\"" + m + "\",";
+			}
+			
+			section = section.substring(0, section.length() - 1);
+		}
+		
+		s = "(" + section + ")";
+		
+		s = "SET @p_LocSubQuery='" + s + "';";
+		
+		System.out.println(s);
+		
+		return s;
+	}
 
 }

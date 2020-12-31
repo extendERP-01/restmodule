@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import nirmalya.aatithya.restmodule.common.ServerDao;
 import nirmalya.aatithya.restmodule.common.utils.DateFormatter;
+import nirmalya.aatithya.restmodule.common.utils.DropDownModel;
 import nirmalya.aatithya.restmodule.common.utils.GenerateLocationMasterParameter;
 import nirmalya.aatithya.restmodule.common.utils.GenerateVendorMasterParameter;
 import nirmalya.aatithya.restmodule.common.utils.JsonResponse;
@@ -122,5 +123,27 @@ public class VendorMasterDao {
 		return response;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<DropDownModel> getCategoryList() {
+		logger.info("Method : getCategoryList starts");
+
+		List<DropDownModel> categoryList = new ArrayList<DropDownModel>();
+
+		try {
+			List<Object[]> x = em.createNamedStoredProcedureQuery("vendorMasterRoutines")
+					.setParameter("actionType", "getCategoryList").setParameter("actionValue", "").getResultList();
+
+			for (Object[] m : x) {
+				DropDownModel dropDownModel = new DropDownModel(m[0], m[1]);
+				categoryList.add(dropDownModel);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		logger.info("Method : getCategoryList ends");
+		return categoryList;
+	}
 	
 }

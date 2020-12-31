@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class InventoryRequisitionModel {
 
-	private String utemList;
+	private String reqId;
 	private String desc;
 	private String reqType;
 	private String reqPrior;
@@ -20,23 +20,31 @@ public class InventoryRequisitionModel {
 	private String model;
 	private String itemCategoryId;
 	private String itemCategoryName;
-	private String uom;  
-	private Double qty; 
-	private String lastPoDate;  
+	private String uom;
+	private Double qty;
+	private String lastPoDate;
 	private Double estimatedPrice;
-	private Double lastPurchasePrice;
-    
-
+	private Double estimatedTotalPrice;
+	private Double lastPurchaseUnitPrice;
+	private Double lastPurchaseTotalPrice;
+	private String createdBy;
+	private String createdOn;
+	private String updatedon;
+	private String updatedBy;
+	private String costCenter;
+	private String location;
+	private String uomId;
+	private String locationId;
+	private String costCenterId;
 	public InventoryRequisitionModel() {
 		super();
 	}
 
-	
-	public InventoryRequisitionModel( Object sku, Object brand, Object itemName, Object itemId, Object model,
+	public InventoryRequisitionModel(Object sku, Object brand, Object itemName, Object itemId, Object model,
 			Object itemCategoryId, Object itemCategoryName, Object uom, Object qty, Object lastPoDate,
-			Object estimatedPrice, Object lastPurchasePrice ) {
+			Object estimatedPrice, Object lastPurchaseUnitPrice) {
 		super();
-		 
+
 		this.sku = (String) sku;
 		this.brand = (String) brand;
 		this.itemName = (String) itemName;
@@ -48,17 +56,16 @@ public class InventoryRequisitionModel {
 		this.qty = (Double) qty;
 		this.lastPoDate = (String) lastPoDate;
 		this.estimatedPrice = (Double) estimatedPrice;
-		this.lastPurchasePrice = (Double) lastPurchasePrice;
-		 
+		this.lastPurchaseUnitPrice = (Double) lastPurchaseUnitPrice;
+
 	}
 
-
-	public String getUtemList() {
-		return utemList;
+	public String getReqId() {
+		return reqId;
 	}
 
-	public void setUtemList(String utemList) {
-		this.utemList = utemList;
+	public void setReqId(String reqId) {
+		this.reqId = reqId;
 	}
 
 	public String getDesc() {
@@ -189,12 +196,100 @@ public class InventoryRequisitionModel {
 		this.estimatedPrice = estimatedPrice;
 	}
 
-	public Double getLastPurchasePrice() {
-		return lastPurchasePrice;
+	public String getCreatedBy() {
+		return createdBy;
 	}
 
-	public void setLastPurchasePrice(Double lastPurchasePrice) {
-		this.lastPurchasePrice = lastPurchasePrice;
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public String getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(String createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public String getUpdatedon() {
+		return updatedon;
+	}
+
+	public void setUpdatedon(String updatedon) {
+		this.updatedon = updatedon;
+	}
+
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public String getCostCenter() {
+		return costCenter;
+	}
+
+	public void setCostCenter(String costCenter) {
+		this.costCenter = costCenter;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public Double getEstimatedTotalPrice() {
+		return estimatedTotalPrice;
+	}
+
+	public void setEstimatedTotalPrice(Double estimatedTotalPrice) {
+		this.estimatedTotalPrice = estimatedTotalPrice;
+	}
+
+	public Double getLastPurchaseUnitPrice() {
+		return lastPurchaseUnitPrice;
+	}
+
+	public void setLastPurchaseUnitPrice(Double lastPurchaseUnitPrice) {
+		this.lastPurchaseUnitPrice = lastPurchaseUnitPrice;
+	}
+
+	public Double getLastPurchaseTotalPrice() {
+		return lastPurchaseTotalPrice;
+	}
+
+	public void setLastPurchaseTotalPrice(Double lastPurchaseTotalPrice) {
+		this.lastPurchaseTotalPrice = lastPurchaseTotalPrice;
+	}
+
+	public String getUomId() {
+		return uomId;
+	}
+
+	public void setUomId(String uomId) {
+		this.uomId = uomId;
+	}
+
+	public String getLocationId() {
+		return locationId;
+	}
+
+	public void setLocationId(String locationId) {
+		this.locationId = locationId;
+	}
+
+	public String getCostCenterId() {
+		return costCenterId;
+	}
+
+	public void setCostCenterId(String costCenterId) {
+		this.costCenterId = costCenterId;
 	}
 
 	@Override

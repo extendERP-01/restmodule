@@ -408,6 +408,45 @@ public class LocationMasterDao {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public ResponseEntity<JsonResponse<List<LocationMasterModel>>> getLocationExcelData(List<String> id) {
+		logger.info("Method : getLocationExcelData starts");
+		
+		List<LocationMasterModel> locationList = new ArrayList<LocationMasterModel>();
+		JsonResponse<List<LocationMasterModel>> resp = new JsonResponse<List<LocationMasterModel>>();
+		
+		String value = GenerateLocationMasterParameter.getLocationList(id);
+		
+		if(id.size() > 0) {
+			try {
+				List<Object[]> x = em.createNamedStoredProcedureQuery("locationMasterRoutines")
+						.setParameter("actionType", "getLocationExcelData").setParameter("actionValue", value)
+						.getResultList();
+				for (Object[] m : x) {
+					Object createDate = null;
+
+					if (m[12] != null) {
+						createDate = DateFormatter.returnStringDateMonth(m[12]);
+					}
+
+					LocationMasterModel dropDownModel = new LocationMasterModel(m[0], m[1], m[2], m[3], m[4], m[5], m[6],
+							m[7], m[8], m[9], m[10], m[11], createDate, null, null,null,null);
+					locationList.add(dropDownModel);
+				}
+				resp.setBody(locationList);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		ResponseEntity<JsonResponse<List<LocationMasterModel>>> response = new ResponseEntity<JsonResponse<List<LocationMasterModel>>>(
+				resp, HttpStatus.CREATED);
+		System.out.println("Excel Res==="+response);
+		logger.info("Method : getLocationExcelData ends");
+		return response;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<DropDownModel> countFloorWiseRoom(List<String> id) {
 		logger.info("Method : countFloorWiseRoom starts");
 		

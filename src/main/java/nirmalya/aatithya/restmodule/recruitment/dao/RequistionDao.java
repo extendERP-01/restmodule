@@ -1,6 +1,6 @@
 package nirmalya.aatithya.restmodule.recruitment.dao;
 
-import java.math.BigInteger;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,15 +15,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import nirmalya.aatithya.restmodule.common.ServerDao;
-import nirmalya.aatithya.restmodule.common.utils.DataTableRequest;
 import nirmalya.aatithya.restmodule.common.utils.DateFormatter;
 import nirmalya.aatithya.restmodule.common.utils.DropDownModel;
 
-import nirmalya.aatithya.restmodule.common.utils.GenerateParameter;
 import nirmalya.aatithya.restmodule.common.utils.GenerateReqParameter;
 import nirmalya.aatithya.restmodule.common.utils.JsonResponse;
 import nirmalya.aatithya.restmodule.recruitment.model.AddRecruitentModel;
-import nirmalya.aatithya.restmodule.recruitment.model.RequistionRestModel;
 
 @Repository
 public class RequistionDao {
@@ -288,7 +285,7 @@ public class RequistionDao {
 					em.createNamedStoredProcedureQuery("requistionRoutines").setParameter("actionType", "modifyreq")
 					.setParameter("actionValue", values).execute();
 				} else {
-					
+					System.out.println("Hii New");
 					em.createNamedStoredProcedureQuery("requistionRoutines").setParameter("actionType", "addreq")
 					.setParameter("actionValue", values).execute();
 					System.out.println("print in addreq block");
@@ -352,7 +349,7 @@ public class RequistionDao {
 			responseHeaders.set("MyResponseHeader", "MyValue");
 			ResponseEntity<JsonResponse<List<AddRecruitentModel>>> response = new ResponseEntity<JsonResponse<List<AddRecruitentModel>>>(
 					resp, responseHeaders, HttpStatus.CREATED);
-			System.out.println("###########" + response);
+			
 			logger.info("Method :  getRequistionview ends");
 		return response;
 	}

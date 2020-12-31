@@ -141,5 +141,83 @@ public class RequistionRestController {
 	}
 
 	
-	
+	/**
+	 * Rest Controller - Get Circle Name For Drop Down
+	 *
+	 *//*
+		 * @RequestMapping(value = "/getJobTitleForJobTitle", method = {
+		 * RequestMethod.GET }) public ResponseEntity<JsonResponse<DropDownModel>>
+		 * getJobTitleForJobTitl(@RequestParam String id) {
+		 * logger.info("Method : dropDownCircle starts");
+		 * 
+		 * logger.info("Method : dropDownCircle ends"); return
+		 * requistionDao.getJobTitleForJobTitl(id); }
+		 * 
+		 * @RequestMapping(value = "/getDepartmentForDepa", method = { RequestMethod.GET
+		 * }) public List<DropDownModel> getDepartmentForDepa() {
+		 * logger.info("Method : getDepartment starts");
+		 * 
+		 * logger.info("Method : getDepartment end"); return
+		 * requistionDao.getDepartmentForDepa(); }
+		 * 
+		 * @RequestMapping(value = "/getHiringManagerForMang", method = {
+		 * RequestMethod.GET }) public List<DropDownModel> getHiringManagerForMang() {
+		 * logger.info("Method : getHiringManager starts");
+		 * 
+		 * logger.info("Method : getHiringManager end"); return
+		 * requistionDao.getHiringManagerForMang(); }
+		 * 
+		 * @RequestMapping(value = "restAddRequistion", method = { RequestMethod.POST })
+		 * public ResponseEntity<JsonResponse<Object>> restAddRequistion(
+		 * 
+		 * @RequestBody RequistionRestModel mixDesignModel) {
+		 * logger.info("Method in rest: restAddMixDesign starts");
+		 * 
+		 * logger.info("Method in rest: restAddMixDesign ends"); return
+		 * requistionDao.restAddRequistion(mixDesignModel); }
+		 * 
+		 * //get requition details
+		 * 
+		 * @RequestMapping(value = "/getRequistionview", method = { RequestMethod.POST
+		 * }) ResponseEntity<JsonResponse<List<RequistionRestModel>>>
+		 * getRequistionview(@RequestBody DataTableRequest request) {
+		 * logger.info("Method : getRequistionview start");
+		 * 
+		 * logger.info("Method : getRequistionview ends");
+		 * 
+		 * return requistionDao.viewRequistion(request); }
+		 * 
+		 * // get details for edit view
+		 * 
+		 * @RequestMapping(value = "/getrequiById", method = { RequestMethod.GET })
+		 * public ResponseEntity<JsonResponse<RequistionRestModel>>
+		 * restAddRequistionbyId(@RequestParam String id) {
+		 * logger.info("Method : editRequistionbyId starts");
+		 * 
+		 * logger.info("Method :editRequistionbyId ends"); return
+		 * requistionDao.restAddRequistionbyId(id); }
+		 * 
+		 * // get details for delete view
+		 * 
+		 * // Delete Structure
+		 * 
+		 * @RequestMapping(value = "deleteRequistion", method = { RequestMethod.GET })
+		 * public ResponseEntity<JsonResponse<Object>>
+		 * deleteRequistionById(@RequestParam String id,
+		 * 
+		 * @RequestParam String createdBy) {
+		 * logger.info("Method : deleteRequistionById starts");
+		 * 
+		 * logger.info("Method : deleteRequistionById ends"); return
+		 * requistionDao.deleteRequistionById(id, createdBy); }
+		 * 
+		 * @RequestMapping(value = "getreqmodalById", method = { RequestMethod.GET })
+		 * public ResponseEntity<JsonResponse<List<RequistionRestModel>>>
+		 * getrequiBymodalId(@RequestParam String reqId) {
+		 * logger.info("Method : getrequiById starts"); System.out.println(reqId);
+		 * logger.info("Method : getrequiById ends");
+		 * 
+		 * return requistionDao.getrequiByIdl(reqId); }
+		 */
+
 }

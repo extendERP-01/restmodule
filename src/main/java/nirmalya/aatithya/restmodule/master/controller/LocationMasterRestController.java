@@ -24,7 +24,7 @@ import nirmalya.aatithya.restmodule.master.model.LocationSectionModel;
  *
  */
 @RestController
-@RequestMapping(value = "master")
+@RequestMapping(value = "master/")
 public class LocationMasterRestController {
 	
 	Logger logger = LoggerFactory.getLogger(LocationMasterRestController.class);
@@ -134,6 +134,14 @@ public class LocationMasterRestController {
 		
 		logger.info("Method : getLocationRoomDetails ends");
 		return locationMasterDao.getLocationRoomDetails(id);
+	}
+	
+	@RequestMapping(value = "getLocationExcelData", method = { RequestMethod.POST })
+	public ResponseEntity<JsonResponse<List<LocationMasterModel>>> getLocationExcelData(@RequestBody List<String> id) {
+		logger.info("Method : getLocationExcelData starts");
+		
+		logger.info("Method : getLocationExcelData ends");
+		return locationMasterDao.getLocationExcelData(id);
 	}
 	
 	@RequestMapping(value = "countFloorWiseRoom", method = { RequestMethod.POST })
