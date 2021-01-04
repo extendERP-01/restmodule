@@ -19,6 +19,7 @@ import nirmalya.aatithya.restmodule.common.utils.DropDownModel;
 import nirmalya.aatithya.restmodule.common.utils.GenerateRequisitionParam;
 import nirmalya.aatithya.restmodule.common.utils.JsonResponse;
 import nirmalya.aatithya.restmodule.inventory.model.InventoryRequisitionModel;
+import nirmalya.aatithya.restmodule.inventory.model.RestItemRequisitonModel;
 
 /**
  * @author NirmalyaLabs
@@ -91,6 +92,31 @@ public class InventoryRequisitionDao {
 	 *
 	 */
 	@SuppressWarnings("unchecked")
+	public List<DropDownModel> getUom() {
+		logger.info("Method : getUom starts");
+		List<DropDownModel> getRequisitionTypeList = new ArrayList<DropDownModel>();
+		try {
+			List<Object[]> x = entityManager.createNamedStoredProcedureQuery("inventoryRequisitionRoutines")
+					.setParameter("actionType", "getUom").setParameter("actionValue", "").getResultList();
+
+			for (Object[] m : x) {
+				DropDownModel dropDownModel = new DropDownModel(m[0], m[1]);
+				getRequisitionTypeList.add(dropDownModel);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("Method : getUom ends");
+		return getRequisitionTypeList;
+	}
+
+	/**
+	 * DAO Function to view particular getRequisitionType in dropDown for
+	 * ItemRequisition
+	 *
+	 */
+	@SuppressWarnings("unchecked")
 	public List<InventoryRequisitionModel> getRequisitionItemList() {
 		logger.info("Method : getRequisitionItemList starts");
 		List<InventoryRequisitionModel> getRequisitionTypeList = new ArrayList<InventoryRequisitionModel>();
@@ -126,15 +152,14 @@ public class InventoryRequisitionDao {
 		logger.info("Method : getActivityLog starts");
 		List<ActivitylogModel> activitylogModelList = new ArrayList<ActivitylogModel>();
 		try {
-			String value = "SET @p_id='" + id + "'";
-			System.out.println("value " + value);
+			String value = "SET @p_reqId='" + id + "'";
 			List<Object[]> x = entityManager.createNamedStoredProcedureQuery("inventoryRequisitionRoutines")
 					.setParameter("actionType", "getActivityLog").setParameter("actionValue", value).getResultList();
 
 			for (Object[] m : x) {
 				Object oa = null;
 				if (m[6] != null) {
-					oa = DateFormatter.returnStringDate(m[8]);
+					oa = DateFormatter.returnStringDate(m[6]);
 				}
 				ActivitylogModel activitylogModel = new ActivitylogModel(m[0], m[1], m[2], m[3], m[4], m[5], oa);
 				activitylogModelList.add(activitylogModel);
@@ -143,6 +168,7 @@ public class InventoryRequisitionDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		System.out.println("activitylogModelList " + activitylogModelList);
 		logger.info("Method : getActivityLog ends");
 		return activitylogModelList;
 	}
@@ -155,7 +181,6 @@ public class InventoryRequisitionDao {
 	public ResponseEntity<JsonResponse<Object>> restAddRequisition(
 			List<InventoryRequisitionModel> restItemRequisitonModel) {
 		logger.info("Method : restAddRequisition starts");
-		List<DropDownModel> dropDownModel = new ArrayList<DropDownModel>();
 		boolean validation = true;
 		JsonResponse<Object> resp = new JsonResponse<Object>();
 		resp.setMessage("");
@@ -190,7 +215,7 @@ public class InventoryRequisitionDao {
 			} else if (l.getItemId() == null || l.getItemId() == "") {
 				validation = false;
 				resp.setCode(errorCode);
-				resp.setMessage("Please Select Item Category.");
+				resp.setMessage("Please Select Product.");
 				break;
 			} else if (l.getSku() == null || l.getSku() == "") {
 				validation = false;
@@ -214,14 +239,13 @@ public class InventoryRequisitionDao {
 
 			try {
 				String value = GenerateRequisitionParam.getItemRequisitionDtlParam(restItemRequisitonModel);
-
 				if (restItemRequisitonModel.get(0).getReqId() != null
 						&& restItemRequisitonModel.get(0).getReqId() != "") {
-					entityManager.createNamedStoredProcedureQuery("inventoryItemRequisitionRoutines")
+					entityManager.createNamedStoredProcedureQuery("inventoryRequisitionRoutines")
 							.setParameter("actionType", "modifyItemRequisition").setParameter("actionValue", value)
 							.execute();
 				} else {
-					entityManager.createNamedStoredProcedureQuery("inventoryItemRequisitionRoutines")
+					entityManager.createNamedStoredProcedureQuery("inventoryRequisitionRoutines")
 							.setParameter("actionType", "addNewRequisitionItem").setParameter("actionValue", value)
 							.execute();
 				}
@@ -290,6 +314,183 @@ public class InventoryRequisitionDao {
 		}
 		logger.info("Method : getLocation ends");
 		return getRequisitionTypeList;
+	}
+
+	/**
+	 * DAO Function to view particular itemName in dropDown for ItemRequisition
+	 * 
+	 *
+	 */
+	@SuppressWarnings("unchecked")
+	public ResponseEntity<JsonResponse<List<InventoryRequisitionModel>>> getProductListByAutoSearch(String id) {
+		logger.info("Method : getProductListByAutoSearch starts");
+		List<InventoryRequisitionModel> itemNameList = new ArrayList<InventoryRequisitionModel>();
+		JsonResponse<List<InventoryRequisitionModel>> resp = new JsonResponse<List<InventoryRequisitionModel>>();
+		String value = "SET @p_searchValue='" + id + "';";
+
+		try {
+			List<Object[]> x = entityManager.createNamedStoredProcedureQuery("inventoryRequisitionRoutines")
+					.setParameter("actionType", "getProductList").setParameter("actionValue", value).getResultList();
+			for (Object[] m : x) {
+				InventoryRequisitionModel dropDownModel = new InventoryRequisitionModel(m[0], m[1], m[2], m[3], null,
+						null, null, null, null, null, null, null);
+				itemNameList.add(dropDownModel);
+			}
+
+			resp.setBody(itemNameList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		ResponseEntity<JsonResponse<List<InventoryRequisitionModel>>> response = new ResponseEntity<JsonResponse<List<InventoryRequisitionModel>>>(
+				resp, HttpStatus.CREATED);
+		logger.info("Method : getProductListByAutoSearch ends");
+		return response;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<InventoryRequisitionModel> getRequisitionViewList() {
+		logger.info("Method : getRequisitionViewList starts");
+		List<InventoryRequisitionModel> getRequisitionTypeList = new ArrayList<InventoryRequisitionModel>();
+		try {
+			List<Object[]> x = entityManager.createNamedStoredProcedureQuery("inventoryRequisitionRoutines")
+					.setParameter("actionType", "getRequisitionViewList").setParameter("actionValue", "")
+					.getResultList();
+
+			for (Object[] m : x) {
+				Object oa = null;
+				if (m[4] != null) {
+					oa = DateFormatter.returnStringDate(m[4]);
+				}
+				Object createdon = null;
+				if (m[7] != null) {
+					createdon = DateFormatter.returnStringDate(m[7]);
+				}
+				InventoryRequisitionModel dropDownModel = new InventoryRequisitionModel(m[0], m[1], m[2], m[3], oa,
+						m[5], m[6], createdon);
+				if (dropDownModel.getHoldStatus().contentEquals("1")) {
+					dropDownModel.setHoldStatus("OnHold");
+				} else if (dropDownModel.getHoldStatus().contentEquals("2")) {
+					dropDownModel.setHoldStatus("Approved");
+				} else {
+					dropDownModel.setHoldStatus("Active");
+				}
+				getRequisitionTypeList.add(dropDownModel);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("getRequisitionTypeList " + getRequisitionTypeList);
+		logger.info("Method : getRequisitionViewList ends");
+		return getRequisitionTypeList;
+	}
+
+	/**
+	 * DAO Function to view particular getRequisitionType in dropDown for
+	 * ItemRequisition
+	 *
+	 */
+	@SuppressWarnings("unchecked")
+	public List<InventoryRequisitionModel> getRequisitionEdit(String id) {
+		logger.info("Method : getRequisitionEdit starts");
+		List<InventoryRequisitionModel> getRequisitionTypeList = new ArrayList<InventoryRequisitionModel>();
+		String[] reqId = id.split(",");
+		try {
+			String values = "SET @P_req='" + reqId[0] + "';";
+			System.out.println("values edit " + values);
+			List<Object[]> x = entityManager.createNamedStoredProcedureQuery("inventoryRequisitionRoutines")
+					.setParameter("actionType", "getRequisitionEdit").setParameter("actionValue", values)
+					.getResultList();
+
+			for (Object[] m : x) {
+				Object oa = null;
+				if (m[18] != null) {
+					oa = DateFormatter.returnStringDate(m[18]);
+				}
+				Object receiveDate = null;
+				if (m[22] != null) {
+					receiveDate = DateFormatter.returnStringDate(m[22]);
+				}
+
+				InventoryRequisitionModel dropDownModel = new InventoryRequisitionModel(m[0], m[1], m[2], m[3], m[4],
+						m[5], m[6], m[7], m[8], m[9], m[10], m[11], m[12], m[13], m[14], m[15], m[16], m[17], oa, m[19],
+						m[20], m[21], receiveDate, m[23]);
+				getRequisitionTypeList.add(dropDownModel);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("Method : getRequisitionEdit ends");
+		return getRequisitionTypeList;
+	}
+
+	/**
+	 * DAO Function to Add ItemRequisition in inventory
+	 *
+	 */
+	public ResponseEntity<JsonResponse<Object>> restDeleteRequisition(
+			InventoryRequisitionModel restItemRequisitonModel) {
+		logger.info("Method : restDeleteRequisition starts");
+		JsonResponse<Object> resp = new JsonResponse<Object>();
+		resp.setMessage("");
+		resp.setCode("");
+
+		try {
+			String value = GenerateRequisitionParam.getDeleteApproveParam(restItemRequisitonModel);
+
+			entityManager.createNamedStoredProcedureQuery("inventoryRequisitionRoutines")
+					.setParameter("actionType", "deleteRequisitionItem").setParameter("actionValue", value).execute();
+
+		} catch (Exception e) {
+			try {
+				String[] err = serverDao.errorProcedureCall(e);
+				resp.setCode(err[0]);
+				resp.setMessage(err[1]);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
+
+		ResponseEntity<JsonResponse<Object>> response = new ResponseEntity<JsonResponse<Object>>(resp,
+				HttpStatus.CREATED);
+		logger.info("Method : restDeleteRequisition ends");
+		return response;
+	}
+
+	/**
+	 * DAO Function to Add ItemRequisition in inventory
+	 *
+	 */
+	public ResponseEntity<JsonResponse<Object>> restApproveRequisition(
+			InventoryRequisitionModel restItemRequisitonModel) {
+		logger.info("Method : restApproveRequisition starts");
+		JsonResponse<Object> resp = new JsonResponse<Object>();
+		resp.setMessage("");
+		resp.setCode("");
+
+		try {
+			String value = GenerateRequisitionParam.getDeleteApproveParam(restItemRequisitonModel);
+
+			entityManager.createNamedStoredProcedureQuery("inventoryRequisitionRoutines")
+					.setParameter("actionType", "approveRequisitionItem").setParameter("actionValue", value).execute();
+
+		} catch (Exception e) {
+			try {
+				String[] err = serverDao.errorProcedureCall(e);
+				resp.setCode(err[0]);
+				resp.setMessage(err[1]);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
+
+		ResponseEntity<JsonResponse<Object>> response = new ResponseEntity<JsonResponse<Object>>(resp,
+				HttpStatus.CREATED);
+		logger.info("Method : restApproveRequisition ends");
+		return response;
 	}
 
 }

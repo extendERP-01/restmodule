@@ -18,7 +18,6 @@ import nirmalya.aatithya.restmodule.common.utils.DropDownModel;
 import nirmalya.aatithya.restmodule.common.utils.JsonResponse;
 import nirmalya.aatithya.restmodule.inventory.dao.InventoryRequisitionDao;
 import nirmalya.aatithya.restmodule.inventory.model.InventoryRequisitionModel;
- 
 
 /**
  * @author NirmalyaLabs
@@ -28,7 +27,7 @@ import nirmalya.aatithya.restmodule.inventory.model.InventoryRequisitionModel;
 @RequestMapping(value = { "inventory/" })
 public class InventoryRequisitionController {
 	Logger logger = LoggerFactory.getLogger(InventoryRequisitionController.class);
-	
+
 	@Autowired
 	InventoryRequisitionDao inventoryRequisitionDao;
 
@@ -38,13 +37,12 @@ public class InventoryRequisitionController {
 	 * 
 	 * 
 	 */
-	@GetMapping(value = "get-requisition-type" )
+	@GetMapping(value = "get-requisition-type")
 	public List<DropDownModel> getRequisitionType() {
 		logger.info("Method : getRequisitionType starts");
 		logger.info("Method : getRequisitionType endss");
 		return inventoryRequisitionDao.getRequisitionType();
 	}
-	
 
 	/*
 	 * 
@@ -58,8 +56,20 @@ public class InventoryRequisitionController {
 		logger.info("Method : getRequisitionPriority endss");
 		return inventoryRequisitionDao.getRequisitionPriority();
 	}
-	
-	
+
+	/*
+	 * 
+	 * Get mapping for get Requisition Type
+	 * 
+	 * 
+	 */
+	@GetMapping(value = "get-uom")
+	public List<DropDownModel> getUom() {
+		logger.info("Method : getUom starts");
+		logger.info("Method : getUom endss");
+		return inventoryRequisitionDao.getUom();
+	}
+
 	/*
 	 * 
 	 * Get mapping for get Requisition Type
@@ -72,8 +82,20 @@ public class InventoryRequisitionController {
 		logger.info("Method : getRequisitionItemList endss");
 		return inventoryRequisitionDao.getRequisitionItemList();
 	}
-	
-	
+
+	/*
+	 * 
+	 * Get mapping for get Requisition Type
+	 * 
+	 * 
+	 */
+	@GetMapping(value = "get-requisition-edit")
+	public List<InventoryRequisitionModel> getRequisitionEdit(@RequestParam String id) {
+		logger.info("Method : getRequisitionEdit starts");
+		logger.info("Method : getRequisitionEdit endss");
+		return inventoryRequisitionDao.getRequisitionEdit(id);
+	}
+
 	/*
 	 * 
 	 * Get mapping for get Requisition Type
@@ -86,21 +108,21 @@ public class InventoryRequisitionController {
 		logger.info("Method : getActivityLog endss");
 		return inventoryRequisitionDao.getActivityLog(id);
 	}
-	
+
 	/*
 	 * 
 	 * PostMapping for add rest ItemRequisition
 	 * 
 	 * 
 	 */
-	@PostMapping(value = "rest-requisition")
+	@PostMapping(value = "rest-add-requisition")
 	public ResponseEntity<JsonResponse<Object>> restAddRequisition(
 			@RequestBody List<InventoryRequisitionModel> restItemRequisitonModel) {
 		logger.info("Method : restAddRequisition starts");
 		logger.info("Method : restAddRequisition ends");
 		return inventoryRequisitionDao.restAddRequisition(restItemRequisitonModel);
 	}
-	
+
 	/*
 	 * 
 	 * Get mapping for get Requisition Type
@@ -113,8 +135,7 @@ public class InventoryRequisitionController {
 		logger.info("Method : getCostCenter endss");
 		return inventoryRequisitionDao.getCostCenter();
 	}
-	
-	
+
 	/*
 	 * 
 	 * Get mapping for get Requisition Type
@@ -127,4 +148,50 @@ public class InventoryRequisitionController {
 		logger.info("Method : getLocation endss");
 		return inventoryRequisitionDao.getLocation();
 	}
+
+	/*
+	 * Get mapping for get Item Name
+	 */
+
+	@GetMapping(value = "getProductListByAutoSearch")
+	public ResponseEntity<JsonResponse<List<InventoryRequisitionModel>>> getProductListByAutoSearch(
+			@RequestParam String id) {
+		logger.info("Method : getProductListByAutoSearch starts");
+
+		logger.info("Method : getProductListByAutoSearch endss");
+		return inventoryRequisitionDao.getProductListByAutoSearch(id);
+	}
+
+	/*
+	 * get all requisition for view
+	 */
+	@GetMapping(value = "get-requisition-view-list")
+	public List<InventoryRequisitionModel> getRequisitionViewList() {
+		logger.info("Method : getRequisitionViewList starts");
+		logger.info("Method : getRequisitionViewList endss");
+		return inventoryRequisitionDao.getRequisitionViewList();
+	}
+
+	/*
+	 * PostMapping for delete ItemRequisition
+	 */
+	@PostMapping(value = "rest-delete-requisition")
+	public ResponseEntity<JsonResponse<Object>> restDeleteRequisition(
+			@RequestBody InventoryRequisitionModel restItemRequisitonModel) {
+		logger.info("Method : restDeleteRequisition starts");
+		logger.info("Method : restDeleteRequisition ends");
+		return inventoryRequisitionDao.restDeleteRequisition(restItemRequisitonModel);
+	}
+
+	/*
+	 * PostMapping for delete ItemRequisition
+	 */
+	@PostMapping(value = "rest-approve-requisition")
+	public ResponseEntity<JsonResponse<Object>> restApproveRequisition(
+			@RequestBody InventoryRequisitionModel restItemRequisitonModel) {
+		logger.info("Method : restApproveRequisition starts");
+		logger.info("Method : restApproveRequisition ends");
+		return inventoryRequisitionDao.restApproveRequisition(restItemRequisitonModel);
+	}
+
 }

@@ -15,6 +15,7 @@ import nirmalya.aatithya.restmodule.common.utils.DropDownModel;
 import nirmalya.aatithya.restmodule.common.utils.JsonResponse;
 import nirmalya.aatithya.restmodule.master.dao.VendorMasterDao;
 import nirmalya.aatithya.restmodule.master.model.LocationMasterModel;
+import nirmalya.aatithya.restmodule.master.model.VendorLocationMasterModel;
 import nirmalya.aatithya.restmodule.master.model.VendorMasterModel;
 
 /**
@@ -43,5 +44,35 @@ public class VendorMasterRestController {
 		
 		logger.info("Method : getCategoryList ends");
 		return vendorMasterDao.getCategoryList();
+	}
+	
+	@RequestMapping(value = "saveVendorLocationMaster", method = { RequestMethod.POST })
+	public ResponseEntity<JsonResponse<VendorLocationMasterModel>> saveVendorLocationMaster(@RequestBody VendorLocationMasterModel vendorLocationMasterModel) {
+		logger.info("Method : saveVendorLocationMaster starts");
+		
+		logger.info("Method : saveVendorLocationMaster ends");
+		return vendorMasterDao.saveVendorLocationMaster(vendorLocationMasterModel);
+	}
+	
+	@RequestMapping(value = "/get-vendor-location-list", method = {RequestMethod.GET})
+	ResponseEntity<JsonResponse<List<VendorLocationMasterModel>>> getVendorLocationview()
+	{
+	logger.info("Method : getVendorLocationview start");
+
+
+	logger.info("Method : getVendorLocationview ends");
+
+	return vendorMasterDao.getVendorLocationview();
+	}
+	
+	@RequestMapping(value = "/get-vendor-list", method = {RequestMethod.GET})
+	ResponseEntity<JsonResponse<List<VendorMasterModel>>> getVendorList()
+	{
+	logger.info("Method : getVendorList start");
+
+
+	logger.info("Method : getVendorList ends");
+
+	return vendorMasterDao.getVendorList();
 	}
 }

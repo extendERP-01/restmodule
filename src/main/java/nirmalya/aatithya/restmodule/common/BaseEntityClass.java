@@ -1982,6 +1982,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 				@StoredProcedureParameter(mode = ParameterMode.IN, name = "actionValue", type = String.class) }
 
 		),
+		@NamedStoredProcedureQuery(name = "productCategoryRoutines", procedureName = "master_productCategoryRoutines", parameters = {
+				@StoredProcedureParameter(mode = ParameterMode.IN, name = "actionType", type = String.class),
+				@StoredProcedureParameter(mode = ParameterMode.IN, name = "actionValue", type = String.class) }
+
+		),
 		@NamedStoredProcedureQuery(name = "warehouseRoutine", procedureName = "warehouse_Routines", parameters = {
 				@StoredProcedureParameter(mode = ParameterMode.IN, name = "actionType", type = String.class),
 				@StoredProcedureParameter(mode = ParameterMode.IN, name = "actionValue", type = String.class) }
@@ -2016,6 +2021,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 		 *  for manage employee
 		 */
 		@NamedStoredProcedureQuery(name = "employeeMasterRoutines", procedureName = "employee_mst_Routines", parameters = {
+				@StoredProcedureParameter(mode = ParameterMode.IN, name = "actionType", type = String.class),
+				@StoredProcedureParameter(mode = ParameterMode.IN, name = "actionValue", type = String.class) }
+
+		),
+		
+		@NamedStoredProcedureQuery(name = "GlobalMasterRoutines", procedureName = "master_globalMasterRoutines", parameters = {
 				@StoredProcedureParameter(mode = ParameterMode.IN, name = "actionType", type = String.class),
 				@StoredProcedureParameter(mode = ParameterMode.IN, name = "actionValue", type = String.class) }
 

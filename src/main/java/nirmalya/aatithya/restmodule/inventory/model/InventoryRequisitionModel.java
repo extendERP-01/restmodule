@@ -36,6 +36,11 @@ public class InventoryRequisitionModel {
 	private String uomId;
 	private String locationId;
 	private String costCenterId;
+
+	private String moduleId;
+	private String componentId;
+	private String subComponentId;
+
 	public InventoryRequisitionModel() {
 		super();
 	}
@@ -58,6 +63,52 @@ public class InventoryRequisitionModel {
 		this.estimatedPrice = (Double) estimatedPrice;
 		this.lastPurchaseUnitPrice = (Double) lastPurchaseUnitPrice;
 
+	}
+
+	public InventoryRequisitionModel(Object reqId, Object desc, Object reqType, Object reqPrior, Object receiveDate,
+			Object holdStatus, Object createdBy, Object createdOn) {
+		super();
+		this.reqId = (String) reqId;
+		this.desc = (String) desc;
+		this.reqType = (String) reqType;
+		this.reqPrior = (String) reqPrior;
+		this.receiveDate = (String) receiveDate;
+		this.holdStatus = (String) holdStatus;
+		this.createdBy = (String) createdBy;
+		this.createdOn = (String) createdOn;
+	}
+
+	public InventoryRequisitionModel(Object reqId, Object sku, Object brand, Object itemName, Object itemId,
+			Object model, Object qty, Object estimatedPrice, Object estimatedTotalPrice, Object lastPurchaseUnitPrice,
+			Object lastPurchaseTotalPrice, Object costCenterId, Object costCenter, Object uom, Object uomId,
+			Object location, Object locationId, Object createdBy, Object createdOn, Object desc, Object reqType,
+			Object reqPrior, Object receiveDate, Object holdStatus) {
+
+		super();
+		this.reqId = (String) reqId;
+		this.sku = (String) sku;
+		this.brand = (String) brand;
+		this.itemName = (String) itemName;
+		this.itemId = (String) itemId;
+		this.model = (String) model;
+		this.qty = (Double) qty;
+		this.estimatedPrice = (Double) estimatedPrice;
+		this.estimatedTotalPrice = (Double) estimatedTotalPrice;
+		this.lastPurchaseUnitPrice = (Double) lastPurchaseUnitPrice;
+		this.lastPurchaseTotalPrice = (Double) lastPurchaseTotalPrice;
+		this.costCenterId = (String) costCenterId;
+		this.costCenter = (String) costCenter;
+		this.uom = (String) uom;
+		this.uomId = (String) uomId;
+		this.location = (String) location;
+		this.locationId = (String) locationId;
+		this.createdBy = (String) createdBy;
+		this.createdOn = (String) createdOn;
+		this.desc = (String) desc;
+		this.reqType = (String) reqType;
+		this.reqPrior = (String) reqPrior;
+		this.receiveDate = (String) receiveDate;
+		this.holdStatus = (String) holdStatus;
 	}
 
 	public String getReqId() {
@@ -290,6 +341,30 @@ public class InventoryRequisitionModel {
 
 	public void setCostCenterId(String costCenterId) {
 		this.costCenterId = costCenterId;
+	}
+
+	public String getModuleId() {
+		return moduleId;
+	}
+
+	public void setModuleId(String moduleId) {
+		this.moduleId = moduleId;
+	}
+
+	public String getComponentId() {
+		return componentId;
+	}
+
+	public void setComponentId(String componentId) {
+		this.componentId = componentId;
+	}
+
+	public String getSubComponentId() {
+		return subComponentId;
+	}
+
+	public void setSubComponentId(String subComponentId) {
+		this.subComponentId = subComponentId;
 	}
 
 	@Override
