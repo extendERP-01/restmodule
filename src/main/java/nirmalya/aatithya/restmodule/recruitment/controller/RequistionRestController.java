@@ -18,6 +18,7 @@ import nirmalya.aatithya.restmodule.common.utils.DropDownModel;
 import nirmalya.aatithya.restmodule.common.utils.JsonResponse;
 import nirmalya.aatithya.restmodule.recruitment.dao.RequistionDao;
 import nirmalya.aatithya.restmodule.recruitment.model.AddRecruitentModel;
+import nirmalya.aatithya.restmodule.recruitment.model.RequisitionActivityModel;
 import nirmalya.aatithya.restmodule.recruitment.model.RequistionRestModel;
 
 /**
@@ -138,6 +139,14 @@ public class RequistionRestController {
 
 		logger.info("Method :editRequisition ends");
 		return requistionDao.editRequisition(id);
+	}
+	
+	@RequestMapping(value = "/activityRequisition", method = { RequestMethod.GET })
+	public ResponseEntity<JsonResponse<List<RequisitionActivityModel>>> activityRequisition(@RequestParam String id) {
+		logger.info("Method : activityRequisition starts");
+
+		logger.info("Method :activityRequisition ends");
+		return requistionDao.activityRequisition(id);
 	}
 
 	

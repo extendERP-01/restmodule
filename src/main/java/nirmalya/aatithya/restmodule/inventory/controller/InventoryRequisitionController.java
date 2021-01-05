@@ -194,4 +194,17 @@ public class InventoryRequisitionController {
 		return inventoryRequisitionDao.restApproveRequisition(restItemRequisitonModel);
 	}
 
+	/*
+	 * Get mapping for get product list
+	 */
+
+	@GetMapping(value = "getProductByReqList")
+	public ResponseEntity<JsonResponse<InventoryRequisitionModel>> getProductByReqList(@RequestParam String id,
+			@RequestParam String prodId) {
+		logger.info("Method : getProductByReqList starts");
+
+		logger.info("Method : getProductByReqList endss");
+		return inventoryRequisitionDao.getProductByReqList(id, prodId);
+	}
+
 }

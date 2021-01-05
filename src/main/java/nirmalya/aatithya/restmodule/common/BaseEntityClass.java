@@ -1378,6 +1378,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 				@StoredProcedureParameter(mode = ParameterMode.IN, name = "actionValue", type = String.class) }
 
 		),
+		
+		/**
+		 * for REFERENCE__HR__ JobType
+		 * 
+		 */
+		@NamedStoredProcedureQuery(name = "HrReference", procedureName = "hr_Job_Type_Routines", parameters = {
+				@StoredProcedureParameter(mode = ParameterMode.IN, name = "actionType", type = String.class),
+				@StoredProcedureParameter(mode = ParameterMode.IN, name = "actionValue", type = String.class) }
+
+		),
 		/**
 		 * Leave Type Routines Stored Procedure definition
 		 */
@@ -1987,6 +1997,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 				@StoredProcedureParameter(mode = ParameterMode.IN, name = "actionValue", type = String.class) }
 
 		),
+		@NamedStoredProcedureQuery(name = "productMasterRoutines", procedureName = "master_productMasterRoutines", parameters = {
+				@StoredProcedureParameter(mode = ParameterMode.IN, name = "actionType", type = String.class),
+				@StoredProcedureParameter(mode = ParameterMode.IN, name = "actionValue", type = String.class) }
+
+		),
 		@NamedStoredProcedureQuery(name = "warehouseRoutine", procedureName = "warehouse_Routines", parameters = {
 				@StoredProcedureParameter(mode = ParameterMode.IN, name = "actionType", type = String.class),
 				@StoredProcedureParameter(mode = ParameterMode.IN, name = "actionValue", type = String.class) }
@@ -2038,6 +2053,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 				@StoredProcedureParameter(mode = ParameterMode.IN, name = "actionValue", type = String.class) })
 
 })
+
+
+
 /**
  * @author NirmalyaLabs
  *

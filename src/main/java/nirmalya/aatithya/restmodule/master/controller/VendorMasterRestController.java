@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import nirmalya.aatithya.restmodule.common.utils.DropDownModel;
@@ -55,14 +56,14 @@ public class VendorMasterRestController {
 	}
 	
 	@RequestMapping(value = "/get-vendor-location-list", method = {RequestMethod.GET})
-	ResponseEntity<JsonResponse<List<VendorLocationMasterModel>>> getVendorLocationview()
+	ResponseEntity<JsonResponse<List<VendorLocationMasterModel>>> getVendorLocationview(@RequestParam("id") String id)
 	{
 	logger.info("Method : getVendorLocationview start");
 
 
 	logger.info("Method : getVendorLocationview ends");
 
-	return vendorMasterDao.getVendorLocationview();
+	return vendorMasterDao.getVendorLocationview(id);
 	}
 	
 	@RequestMapping(value = "/get-vendor-list", method = {RequestMethod.GET})
@@ -74,5 +75,13 @@ public class VendorMasterRestController {
 	logger.info("Method : getVendorList ends");
 
 	return vendorMasterDao.getVendorList();
+	}
+	
+	@RequestMapping(value = "editVendorLoactionById", method = { RequestMethod.GET })
+	public ResponseEntity<JsonResponse<VendorLocationMasterModel>> editVendorLoactionById(@RequestParam String id) {
+		logger.info("Method : editVendorLoactionById starts");
+		
+		logger.info("Method : editVendorLoactionById ends");
+		return vendorMasterDao.editVendorLoactionById(id);
 	}
 }

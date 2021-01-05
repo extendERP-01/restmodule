@@ -21,6 +21,7 @@ import nirmalya.aatithya.restmodule.common.utils.DropDownModel;
 import nirmalya.aatithya.restmodule.common.utils.GenerateReqParameter;
 import nirmalya.aatithya.restmodule.common.utils.JsonResponse;
 import nirmalya.aatithya.restmodule.recruitment.model.AddRecruitentModel;
+import nirmalya.aatithya.restmodule.recruitment.model.RequisitionActivityModel;
 
 @Repository
 public class RequistionDao {
@@ -432,6 +433,52 @@ public class RequistionDao {
 				resp, responseHeaders, HttpStatus.CREATED);
 		
 		logger.info("Method : editRequisition ends");
+		System.out.println(response);
+		return response;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ResponseEntity<JsonResponse<List<RequisitionActivityModel>>> activityRequisition(String id) {
+		logger.info("Method : activityRequisition starts");
+		
+	
+		List<RequisitionActivityModel> req = new ArrayList<RequisitionActivityModel>();
+		JsonResponse<List<RequisitionActivityModel>> resp = new JsonResponse<List<RequisitionActivityModel>>();
+
+		try {
+
+			String value = "SET @p_requisitionId='" + id +"';";
+			System.out.println(value);
+		
+			List<Object[]> x = em.createNamedStoredProcedureQuery("requistionRoutines")
+					.setParameter("actionType", "reqActivity")
+					.setParameter("actionValue", value)
+					.getResultList();
+
+			for (Object[] m : x) {
+				
+				Object sDate = null;
+				if (m[1] != null) {
+				sDate = DateFormatter.returnStringDate(m[1]);
+				}
+				
+				RequisitionActivityModel reqEdit = new RequisitionActivityModel(m[0],sDate,m[2],m[3]);
+				req.add(reqEdit);
+				
+			}
+			
+			resp.setBody(req);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.set("MyResponseHeader", "MyValue");
+
+		ResponseEntity<JsonResponse<List<RequisitionActivityModel>>> response = new ResponseEntity<JsonResponse<List<RequisitionActivityModel>>>(
+				resp, responseHeaders, HttpStatus.CREATED);
+		
+		logger.info("Method : activityRequisition ends");
 		System.out.println(response);
 		return response;
 	}

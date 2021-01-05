@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
@@ -16,7 +17,12 @@ import nirmalya.aatithya.restmodule.common.ServerDao;
 import nirmalya.aatithya.restmodule.common.utils.DateFormatter;
 import nirmalya.aatithya.restmodule.common.utils.DropDownModel;
 import nirmalya.aatithya.restmodule.common.utils.GenerateLocationMasterParameter;
+import nirmalya.aatithya.restmodule.common.utils.GenerateemployeemasterParameter;
+import nirmalya.aatithya.restmodule.common.utils.JsonResponse;
+import nirmalya.aatithya.restmodule.employee.model.ManageEmployeeAddressRestModel;
+import nirmalya.aatithya.restmodule.employee.model.ManageEmployeeRestModel;
 import nirmalya.aatithya.restmodule.master.dao.LocationMasterDao;
+import nirmalya.aatithya.restmodule.master.model.LocationMasterModel;
 
 
 /**
@@ -348,5 +354,231 @@ public class ManageEmployeeDao {
 
 		logger.info("Method : benefitsList ends");
 		return getBankNameList;
+	}
+	@SuppressWarnings("unchecked")
+	public ResponseEntity<JsonResponse<ManageEmployeeRestModel>> saveemployeeMaster(ManageEmployeeRestModel employee) {
+		logger.info("Method : saveemployeeMaster starts");
+
+		Boolean validity = true;
+		JsonResponse<ManageEmployeeRestModel> resp = new JsonResponse<ManageEmployeeRestModel>();
+		resp.setMessage("");
+		resp.setCode("");
+		List<ManageEmployeeRestModel> newemp = new ArrayList<ManageEmployeeRestModel>();
+
+		if (employee.getFirstName() == null || employee.getFirstName() == "") {
+			resp.setMessage("First Name Required");
+			validity = false;
+		} else if (employee.getLastName() == null || employee.getLastName() == "") {
+			resp.setMessage("LastName Required");
+			validity = false;
+		} else if (employee.getGender() == null || employee.getGender() == "") {
+			resp.setMessage("Gender Required");
+			validity = false;
+		} else if (employee.getDob() == null || employee.getDob() == "") {
+			resp.setMessage("Dob Required");
+			validity = false;
+		} else if (employee.getBloodGroup() == null || employee.getBloodGroup() == "") {
+			resp.setMessage("BloodGroup Required");
+			validity = false;
+		} else if (employee.getMaritalStatus() == null || employee.getMaritalStatus() == "") {
+			resp.setMessage("maritalStatus Required");
+			validity = false;
+		} else if (employee.getNationality() == null || employee.getNationality() == "") {
+			resp.setMessage("nationality Required");
+			validity = false;
+		
+	} else if (employee.getFatherName() == null || employee.getFatherName() == "") {
+		resp.setMessage("fatherName Required");
+		validity = false;
+	}else if (employee.getMotherName() == null || employee.getMotherName() == "") {
+		resp.setMessage("motherName Required");
+		validity = false;
+	}else if (employee.getMobileNo() == null || employee.getMobileNo() == "") {
+		resp.setMessage("mobileNo Required");
+		validity = false;
+	}else if (employee.getPersonalMail() == null || employee.getPersonalMail() == "") {
+		resp.setMessage("personalMail Required");
+		validity = false;
+	}else if (employee.getWorkMail() == null || employee.getWorkMail() == "") {
+		resp.setMessage("workMail Required");
+		validity = false;
+	}
+
+		if (validity)
+			try {
+				String values = GenerateemployeemasterParameter.getAddempParam(employee);
+				System.out.println(values);
+
+				if (employee.getEmployeeId() != null && employee.getEmployeeId() != "") {
+					List<Object[]> x = em.createNamedStoredProcedureQuery("employeeMasterRoutines")
+							.setParameter("actionType", "modifyemp").setParameter("actionValue", values)
+							.getResultList();
+					for (Object[] m : x) {
+
+						ManageEmployeeRestModel item = new ManageEmployeeRestModel(m[0],m[1],m[2],m[3],m[4],m[5],m[6],m[7],m[8],m[9],m[10],m[11],m[12],m[13],m[14]);
+						newemp.add(item);
+					}
+				} else {
+
+					List<Object[]> x = em.createNamedStoredProcedureQuery("employeeMasterRoutines")
+							.setParameter("actionType", "addemp").setParameter("actionValue", values).getResultList();
+					for (Object[] m : x) {
+
+						ManageEmployeeRestModel item = new ManageEmployeeRestModel(m[0],m[1],m[2],m[3],m[4],m[5],m[6],m[7],m[8],m[9],m[10],m[11],m[12],m[13],m[14]);
+						newemp.add(item);
+					}
+
+				}
+
+				resp.setBody(newemp.get(0));
+			} catch (Exception e) {
+				try {
+					String[] err = serverDao.errorProcedureCall(e);
+					resp.setCode(err[0]);
+					resp.setMessage(err[1]);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				e.printStackTrace();
+			}
+
+		ResponseEntity<JsonResponse<ManageEmployeeRestModel>> response = new ResponseEntity<JsonResponse<ManageEmployeeRestModel>>(
+				resp, HttpStatus.CREATED);
+
+		logger.info("Method : saveEmpMaster ends");
+		return response;
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public ResponseEntity<JsonResponse<ManageEmployeeAddressRestModel>> saveemployeeaddress(ManageEmployeeAddressRestModel manageEmployeeAddressRestModel) {
+		logger.info("Method : saveemployeeaddress starts");
+
+		Boolean validity = true;
+		JsonResponse<ManageEmployeeAddressRestModel> resp = new JsonResponse<ManageEmployeeAddressRestModel>();
+		resp.setMessage("");
+		resp.setCode("");
+
+		List<ManageEmployeeAddressRestModel> employeeaddess = new ArrayList<ManageEmployeeAddressRestModel>();
+System.out.println("manageEmployeeAddressRestModel " + manageEmployeeAddressRestModel);
+
+
+
+
+ if (manageEmployeeAddressRestModel.getType() == null || manageEmployeeAddressRestModel.getType() == "") {
+			resp.setMessage("Type Name Required");
+			validity = false;
+		} else if (manageEmployeeAddressRestModel.getAddress() == null || manageEmployeeAddressRestModel.getAddress() == "") {
+			resp.setMessage("Address");
+			validity = false;
+		
+		} else if (manageEmployeeAddressRestModel.getCity() == null || manageEmployeeAddressRestModel.getCity() == "") {
+			resp.setMessage("City Required");
+			validity = false;
+		
+		} else if (manageEmployeeAddressRestModel.getState()== null || manageEmployeeAddressRestModel.getState() == "") {
+			resp.setMessage("State Required");
+			validity = false;
+		
+		} else if (manageEmployeeAddressRestModel.getCountry()== null || manageEmployeeAddressRestModel.getCountry() == "") {
+			resp.setMessage("Country Required");
+			validity = false;
+		} else if (manageEmployeeAddressRestModel.getZipCode()== null || manageEmployeeAddressRestModel.getZipCode() == "") {
+			resp.setMessage("ZipCode Required");
+			validity = false;
+		}
+		else if (manageEmployeeAddressRestModel.getStatus()== null || manageEmployeeAddressRestModel.getStatus() == "") {
+			resp.setMessage("Status Required");
+			validity = false;
+		}
+System.out.println("validity " +validity);
+		if (validity)
+			try {
+				String values = GenerateemployeemasterParameter.saveempadd(manageEmployeeAddressRestModel);
+				System.out.println("values " + values);
+				if (manageEmployeeAddressRestModel.getAddressId() != null && manageEmployeeAddressRestModel.getAddressId() != "") {
+//					em.createNamedStoredProcedureQuery("locationMasterRoutines")
+//							.setParameter("actionType", "modifyLocation").setParameter("actionValue", values).execute();
+				
+					List<Object[]> x = em.createNamedStoredProcedureQuery("employeeMasterRoutines")
+							.setParameter("actionType", "modifyempadd").setParameter("actionValue", values)
+							.getResultList();
+					for (Object[] m : x) {
+
+
+						ManageEmployeeAddressRestModel employeeadd = new ManageEmployeeAddressRestModel(m[0],m[1],m[2],m[3],m[4],m[5],m[6],m[7],m[8],m[9]);
+							employeeaddess.add(employeeadd);
+						}
+				} else {
+
+					List<Object[]> x = em.createNamedStoredProcedureQuery("employeeMasterRoutines")
+							.setParameter("actionType", "addempaddress").setParameter("actionValue", values).getResultList();
+					for (Object[] m : x) {
+
+						ManageEmployeeAddressRestModel employeeadd = new ManageEmployeeAddressRestModel(m[0],m[1],m[2],m[3],m[4],m[5],m[6],m[7],m[8],m[9]);
+						employeeaddess.add(employeeadd);
+						}
+				}
+
+				resp.setBody(employeeaddess.get(0));
+			} catch (Exception e) {
+				try {
+					String[] err = serverDao.errorProcedureCall(e);
+					resp.setCode(err[0]);
+					resp.setMessage(err[1]);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				e.printStackTrace();
+			}
+
+		ResponseEntity<JsonResponse<ManageEmployeeAddressRestModel>> response = new ResponseEntity<JsonResponse<ManageEmployeeAddressRestModel>>(
+				resp, HttpStatus.CREATED);
+ System.out.println(response);
+		logger.info("Method : saveVendorLocationMaster ends");
+		return response;
+	}
+	
+
+
+	public ResponseEntity<JsonResponse<List<ManageEmployeeAddressRestModel>>> viewEmployeeadd() {
+		logger.info("Method : getRequistionview starts");
+
+		List<ManageEmployeeAddressRestModel> viewEmployeeadd = new ArrayList<ManageEmployeeAddressRestModel>();
+
+		try {
+
+			@SuppressWarnings("unchecked")
+			List<Object[]> x = em.createNamedStoredProcedureQuery("employeeMasterRoutines")
+					.setParameter("actionType", "viewEmployeeadd").setParameter("actionValue", "").getResultList();
+			System.out.println(x);
+			for (Object[] m : x) {
+			/*	Object sDate = null;
+				if (m[7] != null) {
+					sDate = DateFormatter.returnStringDate(m[7]);
+				}
+				Object Date = null;
+				if (m[8] != null) {
+					Date = DateFormatter.returnStringDate(m[8]);
+				}*/
+
+				ManageEmployeeAddressRestModel vendorLocation = new ManageEmployeeAddressRestModel(null,null,m[0],m[1],m[2],m[3],m[4],m[5],m[6],null);
+				viewEmployeeadd.add(vendorLocation);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		JsonResponse<List<ManageEmployeeAddressRestModel>> resp = new JsonResponse<List<ManageEmployeeAddressRestModel>>();
+		resp.setBody(viewEmployeeadd);
+
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.set("MyResponseHeader", "MyValue");
+		ResponseEntity<JsonResponse<List<ManageEmployeeAddressRestModel>>> response = new ResponseEntity<JsonResponse<List<ManageEmployeeAddressRestModel>>>(
+				resp, responseHeaders, HttpStatus.CREATED);
+
+		logger.info("Method : getRequistionview ends");
+		System.out.println(response);
+		return response;
 	}
 }

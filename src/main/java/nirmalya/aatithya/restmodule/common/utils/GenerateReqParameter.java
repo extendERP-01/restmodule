@@ -21,6 +21,9 @@ public class GenerateReqParameter {
 					"\",\"" + form.getApprover() + "\",\"" + form.getAbout() + "\",\"" + form.getCreatedBy()+ "\",\"" + form.getCreatedBy() +"\",1),";
 			addReq = addReq.substring(0, addReq.length() - 1);
 			
+			s = s + "@p_activityBy='" + form.getCreatedBy() + "',";
+			s = s + "@p_activityStatus='1',";
+			
 		} else {
 			for (int i =0; i < form.getBenefits().size() ; i++) {
 				qItem = qItem + "(\"" + form.getRequisitionId() + "\",\"" + form.getBenefits().get(i) + "\",\"" + form.getCreatedBy()+ "\",\"" + form.getCreatedBy() + "\"),";
@@ -34,6 +37,8 @@ public class GenerateReqParameter {
 					"\",\"" + form.getApprover() + "\",\"" + form.getAbout() + "\",\"" + form.getCreatedBy()+ "\",\"" + form.getCreatedBy() +"\",1),";
 			addReq = addReq.substring(0, addReq.length() - 1);
 			s = s + "@p_requisitionId='" + form.getRequisitionId() + "',";
+			s = s + "@p_activityBy='" + form.getCreatedBy() + "',";
+			s = s + "@p_activityStatus='2',";
 		}
 		
 		s = s + "@p_benefitsData='" + qItem + "',";

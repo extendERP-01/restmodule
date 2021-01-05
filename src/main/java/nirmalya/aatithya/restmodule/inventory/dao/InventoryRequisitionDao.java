@@ -168,7 +168,6 @@ public class InventoryRequisitionDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("activitylogModelList " + activitylogModelList);
 		logger.info("Method : getActivityLog ends");
 		return activitylogModelList;
 	}
@@ -317,7 +316,7 @@ public class InventoryRequisitionDao {
 	}
 
 	/**
-	 * DAO Function to view particular itemName in dropDown for ItemRequisition
+	 * DAO Function for auto complete list
 	 * 
 	 *
 	 */
@@ -366,21 +365,23 @@ public class InventoryRequisitionDao {
 					createdon = DateFormatter.returnStringDate(m[7]);
 				}
 				InventoryRequisitionModel dropDownModel = new InventoryRequisitionModel(m[0], m[1], m[2], m[3], oa,
-						m[5], m[6], createdon);
-				if (dropDownModel.getHoldStatus().contentEquals("1")) {
-					dropDownModel.setHoldStatus("OnHold");
-				} else if (dropDownModel.getHoldStatus().contentEquals("2")) {
-					dropDownModel.setHoldStatus("Approved");
-				} else {
-					dropDownModel.setHoldStatus("Active");
-				}
+						m[5], m[6], createdon ,m[8]);
+				
+				if (dropDownModel.getApproveStatus().contentEquals("1")) {
+					dropDownModel.setApproveStatus("Approve");
+				} else if (dropDownModel.getApproveStatus().contentEquals("0")) {
+					dropDownModel.setApproveStatus("Active");
+				} else if (dropDownModel.getApproveStatus().contentEquals("2")) {
+					dropDownModel.setApproveStatus("Pending");
+				}  else if (dropDownModel.getApproveStatus().contentEquals("3")) {
+					dropDownModel.setApproveStatus("Rejected ");
+				} 
 				getRequisitionTypeList.add(dropDownModel);
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("getRequisitionTypeList " + getRequisitionTypeList);
 		logger.info("Method : getRequisitionViewList ends");
 		return getRequisitionTypeList;
 	}
@@ -394,10 +395,9 @@ public class InventoryRequisitionDao {
 	public List<InventoryRequisitionModel> getRequisitionEdit(String id) {
 		logger.info("Method : getRequisitionEdit starts");
 		List<InventoryRequisitionModel> getRequisitionTypeList = new ArrayList<InventoryRequisitionModel>();
-		String[] reqId = id.split(",");
+
 		try {
-			String values = "SET @P_req='" + reqId[0] + "';";
-			System.out.println("values edit " + values);
+			String values = "SET @P_req='" + id + "';";
 			List<Object[]> x = entityManager.createNamedStoredProcedureQuery("inventoryRequisitionRoutines")
 					.setParameter("actionType", "getRequisitionEdit").setParameter("actionValue", values)
 					.getResultList();
@@ -493,4 +493,41 @@ public class InventoryRequisitionDao {
 		return response;
 	}
 
+	/**
+	 * DAO Function to view item by req id and sku id
+	 * 
+	 *
+	 */
+	@SuppressWarnings("unchecked")
+	public ResponseEntity<JsonResponse<InventoryRequisitionModel>> getProductByReqList(String id, String prodId) {
+		logger.info("Method : getProductByReqList starts");
+		List<InventoryRequisitionModel> itemNameList = new ArrayList<InventoryRequisitionModel>();
+		JsonResponse<InventoryRequisitionModel> resp = new JsonResponse<InventoryRequisitionModel>();
+		String value = "SET @p_reqId='" + id + "',@p_skuId='" + prodId + "';";
+System.out.println(value);
+		try {
+			List<Object[]> x = entityManager.createNamedStoredProcedureQuery("inventoryRequisitionRoutines")
+					.setParameter("actionType", "getProductByReqList").setParameter("actionValue", value)
+					.getResultList();
+			for (Object[] m : x) {
+				Object oa = null;
+				if (m[18] != null) {
+					oa = DateFormatter.returnStringDate(m[18]);
+				} 
+				InventoryRequisitionModel dropDownModel = new InventoryRequisitionModel(null, m[1], m[2], m[3], m[4],
+						m[5], m[6], m[7], m[8], m[9], m[10], m[11], m[12], m[13], m[14], m[15], m[16], m[17], oa, null,
+						null, null, null, null);
+				itemNameList.add(dropDownModel);
+			}
+
+			resp.setBody(itemNameList.get(0));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("itemNameList " + itemNameList);
+		ResponseEntity<JsonResponse<InventoryRequisitionModel>> response = new ResponseEntity<JsonResponse<InventoryRequisitionModel>>(
+				resp, HttpStatus.CREATED);
+		logger.info("Method : getProductByReqList ends");
+		return response;
+	}
 }

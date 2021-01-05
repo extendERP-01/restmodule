@@ -30,7 +30,7 @@ public class AddRecruitentModel {
 	private String createdOn;
 	private String activityStatus;
 	private String reqBenefits;
-
+	 
 	
 	@SuppressWarnings("unchecked")
 	public AddRecruitentModel(Object requisitionId, Object benefits, Object jobTitle, Object jobType,
@@ -62,6 +62,9 @@ public class AddRecruitentModel {
 		this.createdOn = (String) createdOn;
 		this.activityStatus = (String) activityStatus;
 		this.reqBenefits = (String) reqBenefits;
+		
+		
+		
 	}
 	public String getRequisitionId() {
 		return requisitionId;
@@ -201,7 +204,8 @@ public class AddRecruitentModel {
 	}
 	public void setReqBenefits(String reqBenefits) {
 		this.reqBenefits = reqBenefits;
-	}
+	} 
+	
 	@Override
 	public String toString() {
 		ObjectMapper mapperObj = new ObjectMapper();

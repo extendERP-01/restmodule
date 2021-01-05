@@ -15,13 +15,14 @@ public class VendorLocationMasterModel {
 	private String vendorCountry;
 	private String vendorCity;
 	private String vendorState;
+	private String createdOn;
 	private String createdBy;
 	public VendorLocationMasterModel() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public VendorLocationMasterModel(Object vendorLocationId,Object vendorId, Object vendorLocationName, Object vendorLocationType, Object vendorBillingStatus,
-			Object vendorPrimaryStatus, Object vendorLocAddress, Object vendorCountry,Object vendorState, Object vendorCity,  Object createdBy) {
+			Object vendorPrimaryStatus, Object vendorLocAddress, Object vendorCountry,Object vendorState, Object vendorCity,  Object createdBy,Object createdOn) {
 		super();
 		this.vendorLocationId = (String) vendorLocationId;
 		this.vendorId = (String) vendorId;
@@ -36,7 +37,14 @@ public class VendorLocationMasterModel {
 		this.vendorCity = (String) vendorCity;
 		
 		this.createdBy = (String) createdBy;
+		this.createdOn = (String) createdOn;
 		
+	}
+	public String getCreatedOn() {
+		return createdOn;
+	}
+	public void setCreatedOn(String createdOn) {
+		this.createdOn = createdOn;
 	}
 	public String getVendorLocationId() {
 		return vendorLocationId;

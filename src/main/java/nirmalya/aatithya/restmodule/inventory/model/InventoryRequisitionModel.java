@@ -40,6 +40,7 @@ public class InventoryRequisitionModel {
 	private String moduleId;
 	private String componentId;
 	private String subComponentId;
+	private String approveStatus;
 
 	public InventoryRequisitionModel() {
 		super();
@@ -66,7 +67,7 @@ public class InventoryRequisitionModel {
 	}
 
 	public InventoryRequisitionModel(Object reqId, Object desc, Object reqType, Object reqPrior, Object receiveDate,
-			Object holdStatus, Object createdBy, Object createdOn) {
+			Object holdStatus, Object createdBy, Object createdOn ,Object approveStatus) {
 		super();
 		this.reqId = (String) reqId;
 		this.desc = (String) desc;
@@ -76,6 +77,7 @@ public class InventoryRequisitionModel {
 		this.holdStatus = (String) holdStatus;
 		this.createdBy = (String) createdBy;
 		this.createdOn = (String) createdOn;
+		this.approveStatus = (String) approveStatus;
 	}
 
 	public InventoryRequisitionModel(Object reqId, Object sku, Object brand, Object itemName, Object itemId,
@@ -365,6 +367,14 @@ public class InventoryRequisitionModel {
 
 	public void setSubComponentId(String subComponentId) {
 		this.subComponentId = subComponentId;
+	}
+
+	public String getApproveStatus() {
+		return approveStatus;
+	}
+
+	public void setApproveStatus(String approveStatus) {
+		this.approveStatus = approveStatus;
 	}
 
 	@Override
