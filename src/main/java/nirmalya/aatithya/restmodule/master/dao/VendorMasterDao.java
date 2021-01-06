@@ -352,4 +352,39 @@ public class VendorMasterDao {
 		return response;
 	}
 	
+	public ResponseEntity<JsonResponse<Object>> deleteVendorLocation(String id, String createdBy) {
+		logger.info("Method : deleteVendorLocation starts");
+
+		Boolean validity = true;
+		JsonResponse<Object> resp = new JsonResponse<Object>();
+		resp.setMessage("");
+		resp.setCode("");
+
+		if (validity)
+			try {
+				
+				
+				String value = "SET @P_ModifiedBy='" + createdBy + "', @P_VendorId='(" + id + ")';";
+				System.out.println("delete value"+value);
+				em.createNamedStoredProcedureQuery("vendorMasterRoutines").setParameter("actionType", "deleteVendorLoc")
+						.setParameter("actionValue", value).execute();
+
+			} catch (Exception e) {
+				try {
+					String[] err = serverDao.errorProcedureCall(e);
+					resp.setCode(err[0]);
+					resp.setMessage(err[1]);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				e.printStackTrace();
+			}
+
+		ResponseEntity<JsonResponse<Object>> response = new ResponseEntity<JsonResponse<Object>>(resp,
+				HttpStatus.CREATED);
+
+		logger.info("Method : deleteVendorLocation ends");
+		return response;
+	}
+	
 }

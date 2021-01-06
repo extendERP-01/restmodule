@@ -1,6 +1,7 @@
 package nirmalya.aatithya.restmodule.master.model;
 
 import java.io.IOException;
+import java.math.BigInteger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -14,13 +15,14 @@ public class ProductCategoryModel {
 	private String createdBy;
 	private String catLevel;
 	private String parentName;
+	private BigInteger nodeCount;
 	
 	public ProductCategoryModel() {
 		super();
 	}
 
 	public ProductCategoryModel(Object categoryId, Object categoryName, Object categoryDesc, Object categoryStatus,
-			Object parentId, Object createdBy, Object catLevel, Object parentName) {
+			Object parentId, Object createdBy, Object catLevel, Object parentName, Object nodeCount) {
 		super();
 		this.categoryId = (String) categoryId;
 		this.categoryName = (String) categoryName;
@@ -30,6 +32,7 @@ public class ProductCategoryModel {
 		this.createdBy = (String) createdBy;
 		this.catLevel = (String) catLevel;
 		this.parentName = (String) parentName;
+		this.nodeCount = (BigInteger) nodeCount;
 	}
 
 	public String getCategoryId() {
@@ -94,6 +97,14 @@ public class ProductCategoryModel {
 
 	public void setParentName(String parentName) {
 		this.parentName = parentName;
+	}
+
+	public BigInteger getNodeCount() {
+		return nodeCount;
+	}
+
+	public void setNodeCount(BigInteger nodeCount) {
+		this.nodeCount = nodeCount;
 	}
 
 	@Override

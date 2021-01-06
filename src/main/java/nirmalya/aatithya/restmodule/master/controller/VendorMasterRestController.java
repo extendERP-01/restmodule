@@ -84,4 +84,14 @@ public class VendorMasterRestController {
 		logger.info("Method : editVendorLoactionById ends");
 		return vendorMasterDao.editVendorLoactionById(id);
 	}
+	
+	
+	@RequestMapping(value = "deleteVendorLocation", method = { RequestMethod.GET })
+	public ResponseEntity<JsonResponse<Object>> deleteVendorLocation(@RequestParam String id, @RequestParam String createdBy) {
+		logger.info("Method : deleteVendorLocation starts");
+		
+		logger.info("Method : deleteVendorLocation ends");
+		return vendorMasterDao.deleteVendorLocation(id,createdBy);
+	}
+	
 }

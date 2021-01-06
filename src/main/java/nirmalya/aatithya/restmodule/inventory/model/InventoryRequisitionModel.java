@@ -41,6 +41,11 @@ public class InventoryRequisitionModel {
 	private String componentId;
 	private String subComponentId;
 	private String approveStatus;
+	private String brandName;
+	private String modelName;
+	private String activeDate;
+	private String onHoldDate;
+	private String completeDate;
 
 	public InventoryRequisitionModel() {
 		super();
@@ -48,7 +53,7 @@ public class InventoryRequisitionModel {
 
 	public InventoryRequisitionModel(Object sku, Object brand, Object itemName, Object itemId, Object model,
 			Object itemCategoryId, Object itemCategoryName, Object uom, Object qty, Object lastPoDate,
-			Object estimatedPrice, Object lastPurchaseUnitPrice) {
+			Object estimatedPrice, Object lastPurchaseUnitPrice, Object brandName, Object modelName) {
 		super();
 
 		this.sku = (String) sku;
@@ -63,11 +68,14 @@ public class InventoryRequisitionModel {
 		this.lastPoDate = (String) lastPoDate;
 		this.estimatedPrice = (Double) estimatedPrice;
 		this.lastPurchaseUnitPrice = (Double) lastPurchaseUnitPrice;
+		this.brandName = (String) brandName;
+		this.modelName = (String) modelName;
 
 	}
 
 	public InventoryRequisitionModel(Object reqId, Object desc, Object reqType, Object reqPrior, Object receiveDate,
-			Object holdStatus, Object createdBy, Object createdOn ,Object approveStatus) {
+			Object holdStatus, Object createdBy, Object createdOn, Object approveStatus, Object activeDate,
+			Object onHoldDate, Object completeDate) {
 		super();
 		this.reqId = (String) reqId;
 		this.desc = (String) desc;
@@ -78,13 +86,17 @@ public class InventoryRequisitionModel {
 		this.createdBy = (String) createdBy;
 		this.createdOn = (String) createdOn;
 		this.approveStatus = (String) approveStatus;
+		this.activeDate = (String) activeDate;
+		this.onHoldDate = (String) onHoldDate;
+		this.completeDate = (String) completeDate;
 	}
 
 	public InventoryRequisitionModel(Object reqId, Object sku, Object brand, Object itemName, Object itemId,
 			Object model, Object qty, Object estimatedPrice, Object estimatedTotalPrice, Object lastPurchaseUnitPrice,
 			Object lastPurchaseTotalPrice, Object costCenterId, Object costCenter, Object uom, Object uomId,
 			Object location, Object locationId, Object createdBy, Object createdOn, Object desc, Object reqType,
-			Object reqPrior, Object receiveDate, Object holdStatus) {
+			Object reqPrior, Object receiveDate, Object holdStatus,Object activeDate,
+			Object onHoldDate, Object completeDate,Object brandName, Object modelName) {
 
 		super();
 		this.reqId = (String) reqId;
@@ -111,6 +123,12 @@ public class InventoryRequisitionModel {
 		this.reqPrior = (String) reqPrior;
 		this.receiveDate = (String) receiveDate;
 		this.holdStatus = (String) holdStatus;
+		this.activeDate = (String) activeDate;
+		this.onHoldDate = (String) onHoldDate;
+		this.completeDate = (String) completeDate;
+		this.brandName = (String) brandName;
+		this.modelName = (String) modelName;
+
 	}
 
 	public String getReqId() {
@@ -375,6 +393,46 @@ public class InventoryRequisitionModel {
 
 	public void setApproveStatus(String approveStatus) {
 		this.approveStatus = approveStatus;
+	}
+
+	public String getBrandName() {
+		return brandName;
+	}
+
+	public void setBrandName(String brandName) {
+		this.brandName = brandName;
+	}
+
+	public String getModelName() {
+		return modelName;
+	}
+
+	public void setModelName(String modelName) {
+		this.modelName = modelName;
+	}
+
+	public String getActiveDate() {
+		return activeDate;
+	}
+
+	public void setActiveDate(String activeDate) {
+		this.activeDate = activeDate;
+	}
+
+	public String getOnHoldDate() {
+		return onHoldDate;
+	}
+
+	public void setOnHoldDate(String onHoldDate) {
+		this.onHoldDate = onHoldDate;
+	}
+
+	public String getCompleteDate() {
+		return completeDate;
+	}
+
+	public void setCompleteDate(String completeDate) {
+		this.completeDate = completeDate;
 	}
 
 	@Override

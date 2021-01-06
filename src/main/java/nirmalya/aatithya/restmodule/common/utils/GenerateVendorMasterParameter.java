@@ -4,11 +4,11 @@ import nirmalya.aatithya.restmodule.master.model.VendorLocationMasterModel;
 import nirmalya.aatithya.restmodule.master.model.VendorMasterModel;
 
 public class GenerateVendorMasterParameter {
-
+	static String[] metaCharacters = {"\\","^","$","{","}","[","]","(",")",".","*","+","?","|","<",">","-","&","%","'"};
 	public static String saveVendorMaster(VendorMasterModel vendorMasterModel) {
 
 		String s = "";
-
+		
 		if (vendorMasterModel.getVendorId() != null && vendorMasterModel.getVendorId() != "") {
 			s = s + "@p_vendorId='" + vendorMasterModel.getVendorId() + "',";
 		}
@@ -16,7 +16,11 @@ public class GenerateVendorMasterParameter {
 			s = s + "@p_codeId='" + vendorMasterModel.getCode() + "',";
 		}
 		if (vendorMasterModel.getVendorName() != null && vendorMasterModel.getVendorName() != "") {
+			for (int i = 0 ; i < metaCharacters.length ; i++){
+			vendorMasterModel.setVendorName(vendorMasterModel.getVendorName().replace(metaCharacters[i],"\\"+metaCharacters[i]));
+			}
 			s = s + "@p_vendorName='" + vendorMasterModel.getVendorName() + "',";
+			
 		}
 		if (vendorMasterModel.getCategory() != null && vendorMasterModel.getCategory() != "") {
 			s = s + "@p_category='" + vendorMasterModel.getCategory() + "',";
@@ -60,7 +64,11 @@ public class GenerateVendorMasterParameter {
 			s = s + "@p_vendorId='" + vendorLocationMasterModel.getVendorId() + "',";
 		}
 		if (vendorLocationMasterModel.getVendorLocationName() != null && vendorLocationMasterModel.getVendorLocationName() != "") {
+			for (int i = 0 ; i < metaCharacters.length ; i++){
+				vendorLocationMasterModel.setVendorLocationName(vendorLocationMasterModel.getVendorLocationName().replace(metaCharacters[i],"\\"+metaCharacters[i]));
+				}
 			s = s + "@p_vendorLocationName='" + vendorLocationMasterModel.getVendorLocationName() + "',";
+		
 		}
 		if (vendorLocationMasterModel.getVendorLocationType() != null && vendorLocationMasterModel.getVendorLocationType() != "") {
 			s = s + "@p_vendorLocType='" + vendorLocationMasterModel.getVendorLocationType() + "',";

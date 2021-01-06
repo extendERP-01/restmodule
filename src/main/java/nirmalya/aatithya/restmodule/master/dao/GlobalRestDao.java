@@ -14,15 +14,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import nirmalya.aatithya.restmodule.common.ServerDao;
-import nirmalya.aatithya.restmodule.common.utils.DateFormatter;
 import nirmalya.aatithya.restmodule.common.utils.GenerateGlobalMasterParameter;
-import nirmalya.aatithya.restmodule.common.utils.GenerateLocationMasterParameter;
 import nirmalya.aatithya.restmodule.common.utils.JsonResponse;
 import nirmalya.aatithya.restmodule.master.model.GlobalMasterRestModel;
-import nirmalya.aatithya.restmodule.master.model.LocationMasterModel;
-import nirmalya.aatithya.restmodule.master.model.LocationSectionModel;
 
-import javax.persistence.EntityManager;
 
 @Repository
 public class GlobalRestDao {
@@ -34,28 +29,7 @@ public class GlobalRestDao {
 	@Autowired
 	ServerDao serverDao;
 
-	/*
-	 * @SuppressWarnings("unchecked") public List<GlobalMasterRestModel>
-	 * getGlobalList() { logger.info("Method : getGlobalList starts");
-	 * 
-	 * List<GlobalMasterRestModel> globalList = new
-	 * ArrayList<GlobalMasterRestModel>();
-	 * 
-	 * try { List<Object[]> x =
-	 * em.createNamedStoredProcedureQuery("GlobalMasterRoutines")
-	 * .setParameter("actionType", "getGlobalList").setParameter("actionValue",
-	 * "").getResultList();
-	 * 
-	 * for (Object[] m : x) {
-	 * 
-	 * GlobalMasterRestModel dropDownModel = new GlobalMasterRestModel(m[0], m[1],
-	 * m[2], m[3], m[4], m[5], m[6], m[7], m[8], m[9], m[10], m[11], null, null);
-	 * globalList.add(dropDownModel); }
-	 * 
-	 * } catch (Exception e) { e.printStackTrace(); }
-	 * 
-	 * logger.info("Method : getGlobalList ends"); return globalList; }
-	 */
+	
 	public ResponseEntity<JsonResponse<Object>> addGlobalMaster(GlobalMasterRestModel globalMasterRestModel) {
 		logger.info("Method : addGlobalMaster Dao starts");
 		Boolean validity = true;
@@ -124,9 +98,10 @@ public class GlobalRestDao {
 
 			for (Object[] m : x) {
 				GlobalMasterRestModel dropDownModel = new GlobalMasterRestModel(null, m[0], m[1], m[2], null, null,
-						null, null, null, null, m[3], null, null, null);
+						null, null, null, null, null, null, null, m[3],null,null,null,null,null);
 				countryList.add(dropDownModel);
 			}
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -141,6 +116,187 @@ public class GlobalRestDao {
 		resp, responseHeaders, HttpStatus.CREATED);
 
 		logger.info("Method : viewGlobalMaster ends");
+		return response;
+	}
+	
+	
+	
+	
+	
+	public ResponseEntity<JsonResponse<Object>> addStateMaster(GlobalMasterRestModel globalMasterRestModel) {
+		logger.info("Method : addStateMaster Dao starts");
+		Boolean validity = true;
+		JsonResponse<Object> resp = new JsonResponse<Object>();
+
+		resp.setMessage("");
+		resp.setCode("");
+		
+		System.out.println(globalMasterRestModel);
+
+		if (globalMasterRestModel.getStateName() == null || globalMasterRestModel.getStateName() == "") {
+			resp.setMessage("State Name Required");
+			validity = false;
+		} else if (globalMasterRestModel.getStateCode() == null || globalMasterRestModel.getStateCode() == "") {
+			resp.setMessage("State Code Required");
+			validity = false;
+		} else if (globalMasterRestModel.getStateOrderId() == null
+				|| globalMasterRestModel.getStateOrderId() == "") {
+			resp.setMessage("State Order ID Required");
+			validity = false;
+		} else if (globalMasterRestModel.getStateStatus() == null || globalMasterRestModel.getStateStatus() == "") {
+			resp.setMessage("Status Required");
+			validity = false;
+		}
+
+		if (validity)
+			try {
+				String values = GenerateGlobalMasterParameter.State(globalMasterRestModel);
+
+				if (globalMasterRestModel.getStateId() != null && globalMasterRestModel.getStateId() != "") {
+					em.createNamedStoredProcedureQuery("GlobalMasterRoutines")
+							.setParameter("actionType", "modifyState").setParameter("actionValue", values).execute();
+				} else {
+					em.createNamedStoredProcedureQuery("GlobalMasterRoutines").setParameter("actionType", "addState")
+							.setParameter("actionValue", values).execute();
+				}
+
+			} catch (Exception e) {
+				try {
+					String[] err = serverDao.errorProcedureCall(e);
+					resp.setCode(err[0]);
+					resp.setMessage(err[1]);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				e.printStackTrace();
+			}
+
+		ResponseEntity<JsonResponse<Object>> response = new ResponseEntity<JsonResponse<Object>>(resp,
+				HttpStatus.CREATED);
+
+		logger.info("Method :addStateMaster Dao ends");
+		return response;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ResponseEntity<JsonResponse<List<GlobalMasterRestModel>>> viewStateMaster() {
+		logger.info("Method : viewStateMaster starts");
+
+		List<GlobalMasterRestModel> stateList = new ArrayList<GlobalMasterRestModel>();
+
+		try {
+			List<Object[]> x = em.createNamedStoredProcedureQuery("GlobalMasterRoutines").setParameter("actionType", "viewState")
+					.setParameter("actionValue", "").getResultList();
+
+			for (Object[] m : x) {
+				GlobalMasterRestModel dropDownModel = new GlobalMasterRestModel(null,null, null,null,null, m[0],
+						m[1],m[2], null, null, null,null,null, null,m[3],null,null,null,null);
+				stateList.add(dropDownModel);
+			}
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		JsonResponse<List<GlobalMasterRestModel>> resp = new JsonResponse<List<GlobalMasterRestModel>>();
+		resp.setBody(stateList);
+
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.set("MyResponseHeader", "MyValue");
+		ResponseEntity<JsonResponse<List<GlobalMasterRestModel>>> response = new ResponseEntity<JsonResponse<List<GlobalMasterRestModel>>>(
+		resp, responseHeaders, HttpStatus.CREATED);
+
+		logger.info("Method : viewStateMaster ends");
+		return response;
+	}
+
+	
+	public ResponseEntity<JsonResponse<Object>> addCityMaster(GlobalMasterRestModel globalMasterRestModel) {
+		logger.info("Method : addCityMaster Dao starts");
+		Boolean validity = true;
+		JsonResponse<Object> resp = new JsonResponse<Object>();
+
+		resp.setMessage("");
+		resp.setCode("");
+		
+		System.out.println(globalMasterRestModel);
+
+		if (globalMasterRestModel.getCityName() == null || globalMasterRestModel.getCityName() == "") {
+			resp.setMessage("City Name Required");
+			validity = false;
+		} else if (globalMasterRestModel.getCityCode() == null || globalMasterRestModel.getCityCode() == "") {
+			resp.setMessage("City Code Required");
+			validity = false;
+		} else if (globalMasterRestModel.getCityOrderId() == null
+				|| globalMasterRestModel.getCityOrderId() == "") {
+			resp.setMessage("City Order ID Required");
+			validity = false;
+		} else if (globalMasterRestModel.getCityStatus() == null || globalMasterRestModel.getCityStatus() == "") {
+			resp.setMessage("Status Required");
+			validity = false;
+		}
+
+		if (validity)
+			try {
+				String values = GenerateGlobalMasterParameter.City(globalMasterRestModel);
+
+				if (globalMasterRestModel.getCityId() != null && globalMasterRestModel.getCityId() != "") {
+					em.createNamedStoredProcedureQuery("GlobalMasterRoutines")
+							.setParameter("actionType", "modifyCity").setParameter("actionValue", values).execute();
+				} else {
+					em.createNamedStoredProcedureQuery("GlobalMasterRoutines").setParameter("actionType", "addCity")
+							.setParameter("actionValue", values).execute();
+				}
+
+			} catch (Exception e) {
+				try {
+					String[] err = serverDao.errorProcedureCall(e);
+					resp.setCode(err[0]);
+					resp.setMessage(err[1]);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				e.printStackTrace();
+			}
+
+		ResponseEntity<JsonResponse<Object>> response = new ResponseEntity<JsonResponse<Object>>(resp,
+				HttpStatus.CREATED);
+
+		logger.info("Method :addCityMaster Dao ends");
+		return response;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ResponseEntity<JsonResponse<List<GlobalMasterRestModel>>> viewCityMaster() {
+		logger.info("Method : viewCityMaster starts");
+
+		List<GlobalMasterRestModel> cityList = new ArrayList<GlobalMasterRestModel>();
+
+		try {
+			List<Object[]> x = em.createNamedStoredProcedureQuery("GlobalMasterRoutines").setParameter("actionType", "viewCity")
+					.setParameter("actionValue", "").getResultList();
+
+			for (Object[] m : x) {
+				GlobalMasterRestModel dropDownModel = new GlobalMasterRestModel(null,null, null,null,null,null,
+						null,null, null, m[0], m[1],m[2], null, null,null,m[3],null,null,null);
+				cityList.add(dropDownModel);
+			}
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		JsonResponse<List<GlobalMasterRestModel>> resp = new JsonResponse<List<GlobalMasterRestModel>>();
+		resp.setBody(cityList);
+
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.set("MyResponseHeader", "MyValue");
+		ResponseEntity<JsonResponse<List<GlobalMasterRestModel>>> response = new ResponseEntity<JsonResponse<List<GlobalMasterRestModel>>>(
+		resp, responseHeaders, HttpStatus.CREATED);
+
+		logger.info("Method : viewCityMaster ends");
 		return response;
 	}
 

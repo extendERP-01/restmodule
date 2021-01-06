@@ -19,7 +19,6 @@ import nirmalya.aatithya.restmodule.common.utils.DropDownModel;
 import nirmalya.aatithya.restmodule.common.utils.GenerateRequisitionParam;
 import nirmalya.aatithya.restmodule.common.utils.JsonResponse;
 import nirmalya.aatithya.restmodule.inventory.model.InventoryRequisitionModel;
-import nirmalya.aatithya.restmodule.inventory.model.RestItemRequisitonModel;
 
 /**
  * @author NirmalyaLabs
@@ -131,7 +130,7 @@ public class InventoryRequisitionDao {
 					oa = DateFormatter.returnStringDate(m[8]);
 				}
 				InventoryRequisitionModel dropDownModel = new InventoryRequisitionModel(m[0], m[1], m[2], m[3], m[4],
-						null, m[5], m[6], m[7], null, null, m[9]);
+						null, m[5], m[6], m[7], null, null, m[9],null,null);
 				getRequisitionTypeList.add(dropDownModel);
 			}
 
@@ -332,7 +331,7 @@ public class InventoryRequisitionDao {
 					.setParameter("actionType", "getProductList").setParameter("actionValue", value).getResultList();
 			for (Object[] m : x) {
 				InventoryRequisitionModel dropDownModel = new InventoryRequisitionModel(m[0], m[1], m[2], m[3], null,
-						null, null, null, null, null, null, null);
+						null, null, null, null, null, null, null, null, null);
 				itemNameList.add(dropDownModel);
 			}
 
@@ -364,18 +363,30 @@ public class InventoryRequisitionDao {
 				if (m[7] != null) {
 					createdon = DateFormatter.returnStringDate(m[7]);
 				}
+				Object activeDate = null;
+				if (m[9] != null) {
+					activeDate = DateFormatter.returnStringDate(m[9]);
+				}
+				Object onHoldDate = null;
+				if (m[10] != null) {
+					onHoldDate = DateFormatter.returnStringDate(m[10]);
+				}
+				Object completeDate = null;
+				if (m[11] != null) {
+					completeDate = DateFormatter.returnStringDate(m[11]);
+				}
 				InventoryRequisitionModel dropDownModel = new InventoryRequisitionModel(m[0], m[1], m[2], m[3], oa,
-						m[5], m[6], createdon ,m[8]);
-				
+						m[5], m[6], createdon, m[8], activeDate, onHoldDate, completeDate);
+
 				if (dropDownModel.getApproveStatus().contentEquals("1")) {
 					dropDownModel.setApproveStatus("Approve");
 				} else if (dropDownModel.getApproveStatus().contentEquals("0")) {
 					dropDownModel.setApproveStatus("Active");
 				} else if (dropDownModel.getApproveStatus().contentEquals("2")) {
 					dropDownModel.setApproveStatus("Pending");
-				}  else if (dropDownModel.getApproveStatus().contentEquals("3")) {
+				} else if (dropDownModel.getApproveStatus().contentEquals("3")) {
 					dropDownModel.setApproveStatus("Rejected ");
-				} 
+				}
 				getRequisitionTypeList.add(dropDownModel);
 			}
 
@@ -411,10 +422,22 @@ public class InventoryRequisitionDao {
 				if (m[22] != null) {
 					receiveDate = DateFormatter.returnStringDate(m[22]);
 				}
+				Object activeDate = null;
+				if (m[24] != null) {
+					activeDate = DateFormatter.returnStringDate(m[24]);
+				}
+				Object onHoldDate = null;
+				if (m[25] != null) {
+					onHoldDate = DateFormatter.returnStringDate(m[25]);
+				}
+				Object completeDate = null;
+				if (m[26] != null) {
+					completeDate = DateFormatter.returnStringDate(m[26]);
+				}
 
 				InventoryRequisitionModel dropDownModel = new InventoryRequisitionModel(m[0], m[1], m[2], m[3], m[4],
 						m[5], m[6], m[7], m[8], m[9], m[10], m[11], m[12], m[13], m[14], m[15], m[16], m[17], oa, m[19],
-						m[20], m[21], receiveDate, m[23]);
+						m[20], m[21], receiveDate, m[23], activeDate, onHoldDate, completeDate, null, null);
 				getRequisitionTypeList.add(dropDownModel);
 			}
 
@@ -472,7 +495,7 @@ public class InventoryRequisitionDao {
 
 		try {
 			String value = GenerateRequisitionParam.getDeleteApproveParam(restItemRequisitonModel);
-
+System.out.println("value " + value);
 			entityManager.createNamedStoredProcedureQuery("inventoryRequisitionRoutines")
 					.setParameter("actionType", "approveRequisitionItem").setParameter("actionValue", value).execute();
 
@@ -504,7 +527,7 @@ public class InventoryRequisitionDao {
 		List<InventoryRequisitionModel> itemNameList = new ArrayList<InventoryRequisitionModel>();
 		JsonResponse<InventoryRequisitionModel> resp = new JsonResponse<InventoryRequisitionModel>();
 		String value = "SET @p_reqId='" + id + "',@p_skuId='" + prodId + "';";
-System.out.println(value);
+		System.out.println(value);
 		try {
 			List<Object[]> x = entityManager.createNamedStoredProcedureQuery("inventoryRequisitionRoutines")
 					.setParameter("actionType", "getProductByReqList").setParameter("actionValue", value)
@@ -513,18 +536,18 @@ System.out.println(value);
 				Object oa = null;
 				if (m[18] != null) {
 					oa = DateFormatter.returnStringDate(m[18]);
-				} 
+				}
 				InventoryRequisitionModel dropDownModel = new InventoryRequisitionModel(null, m[1], m[2], m[3], m[4],
 						m[5], m[6], m[7], m[8], m[9], m[10], m[11], m[12], m[13], m[14], m[15], m[16], m[17], oa, null,
-						null, null, null, null);
+						null, null, null, null, null, null, null, null, null);
 				itemNameList.add(dropDownModel);
 			}
-
+			System.out.println("itemNameList " + itemNameList);
 			resp.setBody(itemNameList.get(0));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("itemNameList " + itemNameList);
+		
 		ResponseEntity<JsonResponse<InventoryRequisitionModel>> response = new ResponseEntity<JsonResponse<InventoryRequisitionModel>>(
 				resp, HttpStatus.CREATED);
 		logger.info("Method : getProductByReqList ends");

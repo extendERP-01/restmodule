@@ -62,7 +62,7 @@ public class ProductCategoryDao {
 							.getResultList();
 					for (Object[] m : x) {
 
-						ProductCategoryModel item = new ProductCategoryModel(m[0], m[1], m[2], m[3], m[4], m[5], m[6], null);
+						ProductCategoryModel item = new ProductCategoryModel(m[0], m[1], m[2], m[3], m[4], m[5], m[6], null, null);
 						newLoc.add(item);
 					}
 				} else {
@@ -72,7 +72,7 @@ public class ProductCategoryDao {
 							.getResultList();
 					for (Object[] m : x) {
 
-						ProductCategoryModel item = new ProductCategoryModel(m[0], m[1], m[2], m[3], m[4], m[5], m[6], null);
+						ProductCategoryModel item = new ProductCategoryModel(m[0], m[1], m[2], m[3], m[4], m[5], m[6], null, null);
 						newLoc.add(item);
 					}
 
@@ -127,7 +127,7 @@ public class ProductCategoryDao {
 							.getResultList();
 					for (Object[] m : x) {
 						
-						ProductCategoryModel item = new ProductCategoryModel(m[0], m[1], m[2], m[3], m[4], m[5], m[6], null);
+						ProductCategoryModel item = new ProductCategoryModel(m[0], m[1], m[2], m[3], m[4], m[5], m[6], null, null);
 						newLoc.add(item);
 					}
 				} else {
@@ -137,7 +137,7 @@ public class ProductCategoryDao {
 							.getResultList();
 					for (Object[] m : x) {
 						
-						ProductCategoryModel item = new ProductCategoryModel(m[0], m[1], m[2], m[3], m[4], m[5], m[6], null);
+						ProductCategoryModel item = new ProductCategoryModel(m[0], m[1], m[2], m[3], m[4], m[5], m[6], null, null);
 						newLoc.add(item);
 					}
 					
@@ -175,7 +175,7 @@ public class ProductCategoryDao {
 					.setParameter("actionType", "getPCategoryList").setParameter("actionValue", "").getResultList();
 			for (Object[] m : x) {
 
-				ProductCategoryModel item = new ProductCategoryModel(m[0], m[1], null, null, m[2], null, m[3], m[4]);
+				ProductCategoryModel item = new ProductCategoryModel(m[0], m[1], null, null, m[2], null, m[3], m[4], m[5]);
 				newLoc.add(item);
 			}
 
@@ -211,7 +211,7 @@ public class ProductCategoryDao {
 					.setParameter("actionType", "getPCategoryListById").setParameter("actionValue", value).getResultList();
 			for (Object[] m : x) {
 
-				ProductCategoryModel item = new ProductCategoryModel(m[0], m[1], null, null, m[2], null, m[3], m[4]);
+				ProductCategoryModel item = new ProductCategoryModel(m[0], m[1], null, null, m[2], null, m[3], m[4], m[5]);
 				newLoc.add(item);
 			}
 
@@ -247,7 +247,7 @@ public class ProductCategoryDao {
 					.setParameter("actionType", "getPCategoryById").setParameter("actionValue", value).getResultList();
 			for (Object[] m : x) {
 				
-				ProductCategoryModel item = new ProductCategoryModel(m[0], m[1], m[2], m[3], m[4], m[5], m[6], m[7]);
+				ProductCategoryModel item = new ProductCategoryModel(m[0], m[1], m[2], m[3], m[4], m[5], m[6], m[7], null);
 				newLoc.add(item);
 			}
 			

@@ -29,14 +29,6 @@ public class GlobalMasterRestController {
 	@Autowired
 	EntityManager em;
 
-	/*
-	 * @RequestMapping(value = "getGlobalList", method = { RequestMethod.GET })
-	 * public List<GlobalMasterRestModel> getGlobalList() {
-	 * logger.info("Method : getGlobalList starts");
-	 * 
-	 * logger.info("Method : getGlobalList ends"); return
-	 * globalrestdao.getGlobalList(); }
-	 */
 	@RequestMapping(value = "viewGlobalMaster", method = { RequestMethod.GET })
 	public ResponseEntity<JsonResponse<List<GlobalMasterRestModel>>> viewGlobalMaster() {
 		logger.info("Method : viewGlobalMaster starts");
@@ -52,25 +44,36 @@ System.out.println(globalMasterRestModel);
 		logger.info("Method : addGlobalMaster ends");
 		return globalrestdao.addGlobalMaster(globalMasterRestModel);
 	}
+	
+	@RequestMapping(value = "addStateMaster", method = { RequestMethod.POST })
+	public ResponseEntity<JsonResponse<Object>> addStateMaster(@RequestBody GlobalMasterRestModel globalMasterRestModel) {
+		logger.info("Method : addStateMaster starts");
+System.out.println(globalMasterRestModel);
+		logger.info("Method : addStateMaster ends");
+		return globalrestdao.addStateMaster(globalMasterRestModel);
+	}
 
-	/*
-	 * @RequestMapping(value = "rest-add-country-type", method = {
-	 * RequestMethod.POST }) public ResponseEntity<JsonResponse<Object>>
-	 * getCountryDetails(
-	 * 
-	 * @RequestBody GlobalMasterRestModel globalMasterRestModel) {
-	 * logger.info("Method : getCountryDetails starts");
-	 * logger.info("Method : getCountryDetails endss"); return
-	 * globalrestdao.getCountryDetails(globalMasterRestModel); }
-	 */
-	/*
-	 * @RequestMapping(value = "/viewCountry", method = { RequestMethod.GET })
-	 * ResponseEntity<JsonResponse<List<GlobalMasterRestModel>>> getCountryview() {
-	 * logger.info("Method : viewCountry start");
-	 * 
-	 * logger.info("Method : viewCountry ends");
-	 * 
-	 * return globalrestdao.viewCountry(); }
-	 */
+	@RequestMapping(value = "viewStateMaster", method = { RequestMethod.GET })
+	public ResponseEntity<JsonResponse<List<GlobalMasterRestModel>>> viewStateMaster() {
+		logger.info("Method : viewStateMaster starts");
 
+		logger.info("Method : viewStateMaster ends");
+		return globalrestdao.viewStateMaster();
+	}
+	
+	@RequestMapping(value = "addCityMaster", method = { RequestMethod.POST })
+	public ResponseEntity<JsonResponse<Object>> addCityMaster(@RequestBody GlobalMasterRestModel globalMasterRestModel) {
+		logger.info("Method : addCityMaster starts");
+		logger.info("Method : addCityMaster ends");
+		return globalrestdao.addCityMaster(globalMasterRestModel);
+	}
+
+	@RequestMapping(value = "viewCityMaster", method = { RequestMethod.GET })
+	public ResponseEntity<JsonResponse<List<GlobalMasterRestModel>>> viewCityMaster() {
+		logger.info("Method : viewCityMaster starts");
+
+		logger.info("Method : viewCityMaster ends");
+		return globalrestdao.viewCityMaster();
+	}
+	
 }

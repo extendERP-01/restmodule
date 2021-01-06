@@ -1,5 +1,7 @@
 package nirmalya.aatithya.restmodule.common.utils;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import nirmalya.aatithya.restmodule.inventory.model.InventoryRequisitionModel;
@@ -33,6 +35,8 @@ public class GenerateRequisitionParam {
 			status = m.getHoldStatus();
 			createdBy = m.getCreatedBy();
 		}
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		LocalDateTime now = LocalDateTime.now();
 		s = s + "@p_itemRequisition='" + itemRequisition + "',";
 
 		s = s + "@p_iRDescription='" + description + "',";
@@ -40,6 +44,11 @@ public class GenerateRequisitionParam {
 		s = s + "@p_iRPrior='" + restItemRequisitonModel.get(0).getReqPrior() + "',";
 		s = s + "@p_iRType='" + requisitionType + "',";
 		s = s + "@p_status=" + status + ",";
+		if (status.contentEquals("4")) {
+			s = s + "@p_onHoldDate='" + dtf.format(now) + "',";
+		} else if (status.contentEquals("1")) {
+			s = s + "@p_activeDate='" + dtf.format(now) + "',";
+		}
 		s = s + "@p_moduleId='" + moduleId + "',";
 		s = s + "@p_componentId='" + componentId + "',";
 		s = s + "@p_subCmponentId='" + subCmponentId + "',";
@@ -76,14 +85,15 @@ public class GenerateRequisitionParam {
 			litem = litem + "\"" + a + "\",";
 		}
 		litem = litem.substring(0, litem.length() - 1);
-		litem = "(" + litem + ")"; 
+		litem = "(" + litem + ")";
 		s = s + "@p_reqIds='" + litem + "',";
 
 		for (String a : userIds) {
 
-			act = act + "(\"" + restItemRequisitonModel.getModuleId() + "\",\"" + restItemRequisitonModel.getComponentId()
-					+ "\",\"" + restItemRequisitonModel.getSubComponentId() + "\",\"" + a + "\",\""
-					+ "Delete Requisition" + "\",\"" + restItemRequisitonModel.getCreatedBy() + "\"),";
+			act = act + "(\"" + restItemRequisitonModel.getModuleId() + "\",\""
+					+ restItemRequisitonModel.getComponentId() + "\",\"" + restItemRequisitonModel.getSubComponentId()
+					+ "\",\"" + a + "\",\"" + "Delete Requisition" + "\",\"" + restItemRequisitonModel.getCreatedBy()
+					+ "\"),";
 
 		}
 		act = act.substring(0, act.length() - 1);

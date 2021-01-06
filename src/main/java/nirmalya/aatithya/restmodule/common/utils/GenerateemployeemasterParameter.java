@@ -2,6 +2,7 @@ package nirmalya.aatithya.restmodule.common.utils;
 
 import nirmalya.aatithya.restmodule.employee.model.ManageEmployeeAddressRestModel;
 import nirmalya.aatithya.restmodule.employee.model.ManageEmployeeRestModel;
+import nirmalya.aatithya.restmodule.employee.model.ManageEmployeeWorkdetailsRestModel;
 
 public class GenerateemployeemasterParameter {
 
@@ -81,7 +82,7 @@ public class GenerateemployeemasterParameter {
 			s = s + "@p_getAddressId='" + manageEmployeeAddressRestModel.getAddressId() + "',";
 		}
 		if (manageEmployeeAddressRestModel.getEmployeeId() != null && manageEmployeeAddressRestModel.getEmployeeId() != "") {
-			s = s + "@p_EmployeeId='" + manageEmployeeAddressRestModel.getEmployeeId() + "',";
+			s = s + "@p_empId='" + manageEmployeeAddressRestModel.getEmployeeId() + "',";
 		}
 		if (manageEmployeeAddressRestModel.getType() != null && manageEmployeeAddressRestModel.getType() != "") {
 			s = s + "@p_getType='" + manageEmployeeAddressRestModel.getType() + "',";
@@ -123,6 +124,66 @@ public class GenerateemployeemasterParameter {
 
 		return s;
 	}
-}
-	
 
+	
+public static String saveempworkdetails(ManageEmployeeWorkdetailsRestModel manageEmployeeWorkdetailsRestModel) {
+
+	String s = "";
+
+	if (manageEmployeeWorkdetailsRestModel.getEmployeeworkId() != null && manageEmployeeWorkdetailsRestModel.getEmployeeworkId() != "") {
+		s = s + "@p_getEmployeeworkId='" + manageEmployeeWorkdetailsRestModel.getEmployeeworkId() + "',";
+	}
+	if (manageEmployeeWorkdetailsRestModel.getEmployeeId() != null && manageEmployeeWorkdetailsRestModel.getEmployeeId() != "") {
+		s = s + "@p_empId='" + manageEmployeeWorkdetailsRestModel.getEmployeeId() + "',";
+	}
+	if (manageEmployeeWorkdetailsRestModel.getStartDate() != null && manageEmployeeWorkdetailsRestModel.getStartDate() != "") {
+		s = s + "@p_gtartDate='" + manageEmployeeWorkdetailsRestModel.getStartDate() + "',";
+	}
+	if (manageEmployeeWorkdetailsRestModel.getEndDate() != null && manageEmployeeWorkdetailsRestModel.getEndDate() != "") {
+		s = s + "@p_AEndDates='" + manageEmployeeWorkdetailsRestModel.getEndDate() + "',";
+	}
+
+	
+	
+	
+	if (manageEmployeeWorkdetailsRestModel.getJobType() != null && manageEmployeeWorkdetailsRestModel.getJobType() != "") {
+		s = s + "@p_JobTypee='" + manageEmployeeWorkdetailsRestModel.getJobType() + "',";
+	}
+	if (manageEmployeeWorkdetailsRestModel.getJobTitle() != null && manageEmployeeWorkdetailsRestModel.getJobTitle() != "") {
+		s = s + "@p_JobTitle='" + manageEmployeeWorkdetailsRestModel.getJobTitle() + "',";
+	}
+	if (manageEmployeeWorkdetailsRestModel.getDepartment() != null && manageEmployeeWorkdetailsRestModel.getDepartment() != "") {
+		s = s + "@p_Department='" + manageEmployeeWorkdetailsRestModel.getDepartment() + "',";
+	}
+	if (manageEmployeeWorkdetailsRestModel.getEmploymentStatus() != null && manageEmployeeWorkdetailsRestModel.getEmploymentStatus() != "") {
+		s = s + "@p_EmploymentStatu='" + manageEmployeeWorkdetailsRestModel.getEmploymentStatus() + "',";
+	}
+	if (manageEmployeeWorkdetailsRestModel.getDegination()!= null && manageEmployeeWorkdetailsRestModel.getDegination() != "") {
+		s = s + "@p_Deginatio='" + manageEmployeeWorkdetailsRestModel.getDegination() + "',";
+	}
+	
+	
+	
+	if (manageEmployeeWorkdetailsRestModel.getBand() != null && manageEmployeeWorkdetailsRestModel.getBand() != "") {
+		s = s + "@p_Band='" + manageEmployeeWorkdetailsRestModel.getBand() + "',";
+		}
+	if (manageEmployeeWorkdetailsRestModel.getManager() != null && manageEmployeeWorkdetailsRestModel.getManager() != "") {
+		s = s + "@p_Manager='" + manageEmployeeWorkdetailsRestModel.getManager() + "',";
+		}
+	if (manageEmployeeWorkdetailsRestModel.getAnnualCTC() != null && manageEmployeeWorkdetailsRestModel.getAnnualCTC() != "") {
+		s = s + "@p_AnnualCTC='" + manageEmployeeWorkdetailsRestModel.getAnnualCTC() + "',";
+		}
+	if (manageEmployeeWorkdetailsRestModel.getCreatedBy() != null && manageEmployeeWorkdetailsRestModel.getCreatedBy() != "") {
+		s = s + "@p_createdBy='" + manageEmployeeWorkdetailsRestModel.getCreatedBy() + "',";
+	}
+
+	if (s != "") {
+		s = s.substring(0, s.length() - 1);
+
+		s = "SET " + s + ";";
+	}
+
+
+	return s;
+}
+}
